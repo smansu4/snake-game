@@ -2,9 +2,9 @@ import javax.swing.*;
 
 public class Main {
 
-    JFrame frame;
-    int windowWidth = 600;
-    int windowHeight = windowWidth;
+    private JFrame frame;
+    private int windowWidth = 600;
+    private int windowHeight = windowWidth;
 
     public Main() {
         initialize();

@@ -27,11 +27,12 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     private Random random;
 
     //game logic vars
-    Timer gameLoop;
-    int velocityX;
-    int velocityY;
+    private Timer gameLoop;
+    private int velocityX;
+    private int velocityY;
 
-    boolean gameOver = false;
+    private boolean gameOver = false;
+    private boolean restart = false;
 
     public SnakeGame(int boardWidth, int boardHeight) {
         this.boardWidth = boardWidth;
@@ -61,14 +62,6 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     }
 
     public void draw(Graphics g) {
-        //Grid
-//        for (int i = 0; i < boardWidth/tileSize; i++) {
-//            g.setColor(Color.DARK_GRAY);
-//
-//            //(x1, y1, x2, y2) start and stop coordinates (x1,y1)(x2,y2)
-//            g.drawLine(i*tileSize,0,i*tileSize,boardHeight);
-//            g.drawLine(0,i*tileSize,boardWidth,i*tileSize);
-//        }
 
         //Food
         g.setColor(Color.RED);
@@ -87,13 +80,9 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
             g.setFont(new Font("Ariel", Font.PLAIN, 48));
             g.drawString("Game Over!", boardWidth/4, boardHeight/3);
 
-            //TODO: replay button
-//            g.setColor(Color.GRAY);
-//            g.setFont(new Font("Ariel", Font.PLAIN, 24));
-//            g.fill3DRect(boardWidth/3, boardHeight/2, 200, 50, true);
-//
-//            g.setColor(Color.BLACK);
-//            g.drawString("Click to Replay", boardWidth/3, boardHeight/4);
+            g.setColor(Color.RED);
+            g.setFont(new Font("Ariel", Font.PLAIN, 24));
+            g.drawString("Click space to replay", 175, 330);
         }
 
         //Always show score on screen
@@ -105,6 +94,11 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     public void placeFood() {
         food.x = random.nextInt(boardWidth/tileSize);   //600 /25 = 24 so rand num between 0 adn 24;
         food.y = random.nextInt(boardHeight/tileSize);  //600
+    }
+
+    private void repositionSnake() {
+        snakeHead.x = random.nextInt(boardWidth/tileSize);
+        snakeHead.y = random.nextInt(boardHeight/tileSize);
     }
 
     public boolean collision(Tile tile1, Tile tile2) {
@@ -156,11 +150,30 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        move();
-        repaint();
-        if(gameOver) {
-            gameLoop.stop();
+        if(!gameOver) {
+            move();
+            repaint();
+        } else if(restart) {
+            restartGameState();
         }
+    }
+
+    public void restartGameState() {
+
+        //stop snake from moving;
+        velocityX = 0;
+        velocityY = 0;
+
+        //clear the body
+        snakeBody.clear();
+
+        //move pieces
+        repositionSnake();
+        placeFood();
+
+        //reset state
+        restart = false;
+        gameOver = false;
     }
 
     //Key Listener methods
@@ -172,21 +185,23 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         } else if(e.getKeyCode() == KeyEvent.VK_DOWN && velocityY != -1) {
             velocityX = 0;
             velocityY = 1;
-        }else if(e.getKeyCode() == KeyEvent.VK_LEFT && velocityX != 1) {
+        } else if(e.getKeyCode() == KeyEvent.VK_LEFT && velocityX != 1) {
             velocityX = -1;
             velocityY = 0;
-        }else if(e.getKeyCode() == KeyEvent.VK_RIGHT && velocityX != -1) {
+        } else if(e.getKeyCode() == KeyEvent.VK_RIGHT && velocityX != -1) {
             velocityX = 1;
             velocityY = 0;
+        } else if(gameOver && e.getKeyCode() == KeyEvent.VK_SPACE) {
+            restart = true;
         }
     }
 
-    //do not need
+
+    //do not need methods below
     @Override
     public void keyTyped(KeyEvent e) {
     }
 
-    //do not need
     @Override
     public void keyReleased(KeyEvent e) {
     }
