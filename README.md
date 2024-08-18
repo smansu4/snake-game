@@ -1,10 +1,17 @@
 # snake-game
-Java snake game
+Java Snake Game
 
-This project is based on the tutorial: https://www.youtube.com/watch?v=Y62MJny9LHg
+The objective of this project is to get familiar with game development and Java GUI development using Java Swing. 
+The skills learned in this tutorial will be used in making new projects in the future. The tutorial the project is
+built upon on is linked in the resources section below. 
 
-The objective of this project was to get familiar with game development and java GUI. The skills learned in this tutorial will be useful when making games in the future.
+Additional features (not covered in the tutorial) have been added:  
 
-Changes from the tutorial:
-- Restart feature which allows users to replay game without exiting the window
+- Restart feature allowing users to replay without exiting game window
 - Support for color-blind friendly color palette (currently untoggable in game play)
+
+
+Resources: 
+- This project is based on the tutorial: https://www.youtube.com/watch?v=Y62MJny9LHg
+- Java Swing documentation: https://docs.oracle.com/javase/tutorial/uiswing/index.html 
+- Okabe and Ito color-blind friendly palette: https://siegal.bio.nyu.edu/color-palette/
