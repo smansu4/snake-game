@@ -13,7 +13,7 @@ import java.awt.*;
 public class OkabeItoTheme implements Theme {
     @Override
     public Color getSnakeColor() {
-        return new Color(213, 94, 0);
+        return new Color(240, 228, 66);
     }
 
     @Override
@@ -23,7 +23,7 @@ public class OkabeItoTheme implements Theme {
 
     @Override
     public Color getTextColor() {
-        return new Color(204, 121, 167);
+        return new Color(213, 94, 0);
     }
 
     @Override
