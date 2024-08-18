@@ -36,6 +36,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
     private boolean gameOver = false;
     private boolean restart = false;
+    private boolean pausedGame = false;
 
     public SnakeGame(int boardWidth, int boardHeight, Theme colorPalette) {
         this.colorPalette = colorPalette;
@@ -88,6 +89,14 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
             g.setColor(colorPalette.getTextColor());
             g.setFont(new Font("Ariel", Font.PLAIN, 24));
             g.drawString("Click space to replay", 175, 330);
+        } else if(pausedGame) {
+            g.setColor(colorPalette.getTextColor());
+            g.setFont(new Font("Ariel", Font.PLAIN, 48));
+            g.drawString("Paused Game", boardWidth/4, boardHeight/3);
+
+            g.setColor(colorPalette.getTextColor());
+            g.setFont(new Font("Ariel", Font.PLAIN, 24));
+            g.drawString("Click space to unpause", 175, 330);
         }
 
         //Always show score on screen
@@ -101,7 +110,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         food.y = random.nextInt(boardHeight/tileSize);  //600
     }
 
-    private void repositionSnake() {
+    private void placeSnake() {
         snakeHead.x = random.nextInt(boardWidth/tileSize);
         snakeHead.y = random.nextInt(boardHeight/tileSize);
     }
@@ -152,17 +161,6 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         }
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if(!gameOver) {
-            move();
-        } else if(restart) {
-            restartGameState();
-        }
-
-        repaint();
-    }
-
     public void restartGameState() {
 
         //stop snake from moving;
@@ -173,12 +171,23 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         snakeBody.clear();
 
         //move pieces
-        repositionSnake();
+        placeSnake();
         placeFood();
 
         //reset state
         restart = false;
         gameOver = false;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(!gameOver && !pausedGame) {
+            move();
+        } else if(restart) {
+            restartGameState();
+        }
+
+        repaint();
     }
 
     //Key Listener methods
@@ -196,7 +205,10 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         } else if(e.getKeyCode() == KeyEvent.VK_RIGHT && velocityX != -1) {
             velocityX = 1;
             velocityY = 0;
-        } else if(gameOver && e.getKeyCode() == KeyEvent.VK_SPACE) {
+        } else if(!gameOver && e.getKeyCode() == KeyEvent.VK_SPACE) {
+            pausedGame = !pausedGame;
+        }
+        else if(gameOver && e.getKeyCode() == KeyEvent.VK_SPACE) {
             restart = true;
         }
     }

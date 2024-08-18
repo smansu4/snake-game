@@ -9,7 +9,7 @@ Additional features (not covered in the tutorial) have been added:
 
 - Restart feature allowing users to replay without exiting game window
 - Support for color-blind friendly color palette (currently untoggable in game play)
-
+- Pause feature allowing players to stop game without losing progress 
 
 Resources: 
 - This project is based on the tutorial: https://www.youtube.com/watch?v=Y62MJny9LHg
