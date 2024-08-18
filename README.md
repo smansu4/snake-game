@@ -1,5 +1,5 @@
 # snake-game
-Java Snake Game
+The classic snake game written in Java and Swing.
 
 The objective of this project is to get familiar with game development and Java GUI development using Java Swing. 
 The skills learned in this tutorial will be used in making new projects in the future. The tutorial the project is
