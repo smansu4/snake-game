@@ -7,3 +7,4 @@ The objective of this project was to get familiar with game development and java
 
 Changes from the tutorial:
 - Restart feature which allows users to replay game without exiting the window
+- Support for color-blind friendly color palette (currently untoggable in game play)

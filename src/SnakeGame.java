@@ -1,3 +1,5 @@
+import theme.Theme;
+
 import javax.swing.*;
 
 import java.awt.*;
@@ -20,6 +22,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     private int boardWidth;
     private int boardHeight;
     private int tileSize = 25;
+    private Theme colorPalette;
 
     private Tile snakeHead;
     private ArrayList<Tile> snakeBody;
@@ -34,11 +37,13 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     private boolean gameOver = false;
     private boolean restart = false;
 
-    public SnakeGame(int boardWidth, int boardHeight) {
+    public SnakeGame(int boardWidth, int boardHeight, Theme colorPalette) {
+        this.colorPalette = colorPalette;
+
         this.boardWidth = boardWidth;
         this.boardHeight = boardHeight;
         setPreferredSize(new Dimension(this.boardWidth, this.boardHeight));
-        setBackground(Color.BLACK);
+        setBackground(colorPalette.getBackgroundColor());
         addKeyListener(this);
         setFocusable(true);         //snake game to listen to event
 
@@ -64,11 +69,11 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     public void draw(Graphics g) {
 
         //Food
-        g.setColor(Color.RED);
+        g.setColor(colorPalette.getFoodColor());
         g.fill3DRect(food.x * tileSize,food.y * tileSize,tileSize,tileSize, true);
 
         //Snake
-        g.setColor(Color.GREEN);
+        g.setColor(colorPalette.getSnakeColor());
         g.fill3DRect(snakeHead.x * tileSize, snakeHead.y * tileSize, tileSize, tileSize, true);
 
         //snakeBody
@@ -76,18 +81,18 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
         //Score
         if(gameOver) {
-            g.setColor(Color.RED);
+            g.setColor(colorPalette.getTextColor());
             g.setFont(new Font("Ariel", Font.PLAIN, 48));
             g.drawString("Game Over!", boardWidth/4, boardHeight/3);
 
-            g.setColor(Color.RED);
+            g.setColor(colorPalette.getTextColor());
             g.setFont(new Font("Ariel", Font.PLAIN, 24));
             g.drawString("Click space to replay", 175, 330);
         }
 
         //Always show score on screen
-        g.setColor(Color.GREEN);
-        g.setFont(new Font("Ariel", Font.PLAIN, 16));
+        g.setColor(colorPalette.getScoreColor());
+        g.setFont(new Font("Ariel", Font.PLAIN, 20));
         g.drawString("Score: " + snakeBody.size(), tileSize - 16, tileSize);
     }
 
@@ -135,15 +140,14 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         snakeHead.y += velocityY;
 
         //GameOver conditions
-        for(int i = 0; i < snakeBody.size(); i++) {
-            Tile snakeSegment = snakeBody.get(i);
-            if(collision(snakeHead, snakeSegment)) {
+        for (Tile snakeSegment : snakeBody) {
+            if (collision(snakeHead, snakeSegment)) {
                 gameOver = true;
             }
         }
 
-        if (snakeHead.x * tileSize < 0 || snakeHead.x * tileSize > boardWidth ||
-                snakeHead.y * tileSize < 0 || snakeHead.y * tileSize > boardHeight ) {
+        if (snakeHead.x * tileSize < 0 || snakeHead.x * tileSize >= boardWidth ||
+                snakeHead.y * tileSize < 0 || snakeHead.y * tileSize >= boardHeight ) {
             gameOver = true;
         }
     }
@@ -152,10 +156,11 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     public void actionPerformed(ActionEvent e) {
         if(!gameOver) {
             move();
-            repaint();
         } else if(restart) {
             restartGameState();
         }
+
+        repaint();
     }
 
     public void restartGameState() {

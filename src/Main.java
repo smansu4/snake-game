@@ -1,3 +1,5 @@
+import theme.OkabeItoTheme;
+
 import javax.swing.*;
 
 public class Main {
@@ -18,7 +20,7 @@ public class Main {
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        SnakeGame snakeGame = new SnakeGame(windowWidth, windowHeight);
+        SnakeGame snakeGame = new SnakeGame(windowWidth, windowHeight, new OkabeItoTheme());
         frame.add(snakeGame);
         frame.pack();
         snakeGame.requestFocus();
