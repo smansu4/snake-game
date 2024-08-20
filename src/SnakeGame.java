@@ -1,4 +1,3 @@
-import theme.ClassicTheme;
 import theme.Theme;
 
 import javax.swing.*;
@@ -23,7 +22,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     private final int boardWidth;
     private final int boardHeight;
     private final int tileSize = 25;
-    private Theme colorPalette;
+    private Theme theme;
 
     private final Tile snakeHead;
     private final ArrayList<Tile> snakeBody;
@@ -35,19 +34,18 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     private int velocityX;
     private int velocityY;
 
-//    private JToggleButton themeToggleButton;
-//    private boolean gameStarted = false;
+    private boolean gameStarted = false;
     private boolean gameOver = false;
     private boolean restart = false;
     private boolean pausedGame = false;
 
-    public SnakeGame(int boardWidth, int boardHeight, Theme colorPalette) {
-        this.colorPalette = colorPalette;
+    public SnakeGame(int boardWidth, int boardHeight) {
+        this.theme = Theme.getInstance();
 
         this.boardWidth = boardWidth;
         this.boardHeight = boardHeight;
         setPreferredSize(new Dimension(this.boardWidth, this.boardHeight));
-        setBackground(colorPalette.getBackgroundColor());
+        setBackground(theme.getPalette().getBackgroundColor());
         addKeyListener(this);
         setFocusable(true);         //snake game to listen to event
 
@@ -72,12 +70,17 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
     public void draw(Graphics g) {
 
+        if(!gameStarted) {
+            displayMainMenuScreen(g);
+            return;
+        }
+
         //Food
-        g.setColor(colorPalette.getFoodColor());
+        g.setColor(theme.getPalette().getFoodColor());
         g.fill3DRect(food.x * tileSize,food.y * tileSize,tileSize,tileSize, true);
 
         //Snake
-        g.setColor(colorPalette.getSnakeColor());
+        g.setColor(theme.getPalette().getSnakeColor());
         g.fill3DRect(snakeHead.x * tileSize, snakeHead.y * tileSize, tileSize, tileSize, true);
 
         //snakeBody
@@ -91,7 +94,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         }
 
         // display score
-        g.setColor(colorPalette.getScoreColor());
+        g.setColor(theme.getPalette().getScoreColor());
         g.setFont(new Font("Ariel", Font.PLAIN, 20));
         g.drawString("Score: " + snakeBody.size(), tileSize - 16, tileSize);
     }
@@ -165,27 +168,27 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     }
 
     private void displayScreen(Graphics g, String title, String subtitle) {
-        g.setColor(colorPalette.getTextColor());
+        g.setColor(theme.getPalette().getTextColor());
         g.setFont(new Font("Ariel", Font.PLAIN, 48));
         g.drawString(title, boardWidth/4, boardHeight/3);
 
-        g.setColor(colorPalette.getTextColor());
+        g.setColor(theme.getPalette().getTextColor());
         g.setFont(new Font("Ariel", Font.PLAIN, 24));
-        g.drawString(subtitle, 175, 330);
+        g.drawString(subtitle, 185, 330);
     }
 
     private void displayMainMenuScreen(Graphics g) {
         displayScreen(g, "SNAKE GAME", "Press enter to play");
 
         g.setFont(new Font("Ariel", Font.PLAIN, 12));
-        g.setColor(colorPalette.getTextColor());
-        //g.drawRect("Change theme", 225, 450);
-        g.drawString("Press 'T' to change theme", 225, 450);
+        g.setColor(theme.getPalette().getTextColor());
+        g.drawString("Press enter to pause game", 210, 400);
+        g.drawString("Press 'T' to change theme", 215, 425);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(!gameOver && !pausedGame) {
+        if(gameStarted && !gameOver && !pausedGame) {
             move();
         } else if(restart) {
             restartGameState();
@@ -209,12 +212,12 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         } else if(e.getKeyCode() == KeyEvent.VK_RIGHT && velocityX != -1) {
             velocityX = 1;
             velocityY = 0;
+        } //theme
+        else if(e.getKeyCode() == KeyEvent.VK_T) {
+            theme.toggle();
+        } else if(!gameStarted && e.getKeyCode() == KeyEvent.VK_ENTER) {
+            gameStarted = true;
         }
-//        else if(!gameStarted && e.getKeyCode() == KeyEvent.VK_T) {
-//            colorPalette = new ClassicTheme();
-//        } else if(!gameStarted && !gameOver && e.getKeyCode() == KeyEvent.VK_ENTER) {
-//            gameStarted = true;
-//        }
         else if(!gameOver && e.getKeyCode() == KeyEvent.VK_ENTER) {
             pausedGame = !pausedGame;
         }

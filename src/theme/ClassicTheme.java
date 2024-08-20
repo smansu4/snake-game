@@ -2,7 +2,7 @@ package theme;
 
 import java.awt.*;
 
-public class ClassicTheme implements Theme {
+public final class ClassicTheme implements ColorPalette {
     @Override
     public Color getSnakeColor() {
         return Color.GREEN;
@@ -20,6 +20,6 @@ public class ClassicTheme implements Theme {
 
     @Override
     public Color getScoreColor() {
-        return Color.GREEN;
+        return Color.WHITE;
     }
 }

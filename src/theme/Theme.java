@@ -1,13 +1,38 @@
 package theme;
 
-import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public interface Theme {
+public class Theme {
 
-    Color getSnakeColor();
-    Color getFoodColor();
-    Color getTextColor();
-    Color getScoreColor();
+    private static Theme theme;
 
-    default Color getBackgroundColor() {return Color.BLACK;};
+    private List<ColorPalette> themesList;
+    private boolean useDefaultTheme = true;
+
+    private Theme() {
+        themesList = new ArrayList<>();
+        themesList.add(new ClassicTheme());
+        themesList.add(new OkabeItoTheme());
+    }
+
+    public static Theme getInstance() {
+        if(theme == null) {
+            theme = new Theme();
+        }
+
+        return theme;
+    }
+
+    public ColorPalette toggle() {
+        useDefaultTheme = !useDefaultTheme;
+        return getPalette();
+    }
+
+    public ColorPalette getPalette() {
+        if(useDefaultTheme){
+            return themesList.get(0);
+        }
+        return themesList.get(1);
+    }
 }

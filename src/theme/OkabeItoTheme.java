@@ -10,7 +10,7 @@ import java.awt.*;
  * This theme was chosen because it also contains black and I prefer black for
  * the background.
  */
-public class OkabeItoTheme implements Theme {
+public final class OkabeItoTheme implements ColorPalette {
     @Override
     public Color getSnakeColor() {
         return new Color(240, 228, 66);

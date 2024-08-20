@@ -1,22 +1,16 @@
-import theme.OkabeItoTheme;
-import theme.Theme;
-
 import javax.swing.*;
 import java.awt.*;
 
 
 /**
  * TODO:
- * - complete the color theme change
  * - fix main menu
- *
  */
 public class Main {
 
     private JFrame frame;
     private int windowWidth = 600;
     private int windowHeight = windowWidth;
-    private Theme colorTheme;
 
     public Main() {
         initialize();
@@ -31,13 +25,10 @@ public class Main {
         frame.setResizable(false);
         frame.setBackground(Color.BLACK);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        //Set as default theme
-        colorTheme = new OkabeItoTheme();
     }
 
     public void startGame() {
-        SnakeGame snakeGame = new SnakeGame(windowWidth, windowHeight, colorTheme);
+        SnakeGame snakeGame = new SnakeGame(windowWidth, windowHeight);
         frame.add(snakeGame);
         frame.pack();
         snakeGame.requestFocus();
