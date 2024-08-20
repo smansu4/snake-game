@@ -27,5 +27,5 @@ Resources:
 
 Game play notes:
 
-Player score is displayed on the top left hand corner of window
-The color theme can be changed during game play 
+- Player score is displayed on the top left hand corner of window
+- The color theme can be changed during game play 
