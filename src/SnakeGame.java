@@ -6,8 +6,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
 
-//TODO:         //Note, we can also launch SnakeGame single and multiplayer
-//        // from different files.
+
 public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
     private final int boardWidth;
@@ -23,7 +22,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     //game logic vars
     private Timer gameLoop;
 
-    private boolean isMultiplayer = true;
+    private boolean isMultiplayer = false;
     private boolean gameStarted = false;
     private boolean gameOver = false;
     private boolean restart = false;
@@ -141,43 +140,28 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         }
     }
 
+    public boolean didSnakeCollideWithBody(Snake player) {
+        for (Tile snakeSegment : player.body) {
+            if (isCollision(player.head, snakeSegment)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void checkGameRules () {
         //GameOver conditions
-        for (Tile snakeSegment : snake.body) {
-            if (isCollision(snake.head, snakeSegment)) {
-                gameOver = true;
-            }
-        }
+        if(didSnakeCollideWithBody(snake) || isSnakeOutOfBounds(snake)) gameOver = true;
 
-        for (Tile snakeSegment : snake2.body) {
-            if (isCollision(snake2.head, snakeSegment)) {
-                gameOver = true;
-            }
+        if(isMultiplayer) {
+            if(isSnakeOutOfBounds(snake2) || isSnakeOutOfBounds(snake2)) gameOver = true;
         }
-
-        if(isSnakeOutOfBounds(snake)) gameOver = true;
-        if(isSnakeOutOfBounds(snake2)) gameOver = true;
     }
 
     private boolean isSnakeOutOfBounds(Snake player) {
         return player.head.x * Tile.SIZE < 0 || player.head.x * Tile.SIZE >= boardWidth ||
                 player.head.y * Tile.SIZE < 0 || player.head.y * Tile.SIZE >= boardHeight;
     }
-
-//    public void checkGameRulesMultiPlayer() {
-//        //GameOver conditions
-//        for (Tile snakeSegment : snake.body) {
-//            if (isCollision(snake.head, snakeSegment)) {
-//                gameOver = true;
-//            }
-//        }
-//
-//        for (Tile snakeSegment : snake2.body) {
-//            if (isCollision(snake2.head, snakeSegment)) {
-//                gameOver = true;
-//            }
-//        }
-//    }
 
     public void restartGameState() {
         //stop snake and clear body
@@ -220,10 +204,9 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     public void actionPerformed(ActionEvent e) {
         if(gameStarted && !gameOver && !pausedGame) {
             didSnakeEatFood(snake);
-            didSnakeEatFood(snake2);
-
             snake.move();
             if(isMultiplayer) {
+                didSnakeEatFood(snake2);
                 snake2.move();
             }
             checkGameRules();
