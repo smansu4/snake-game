@@ -27,5 +27,6 @@ Resources:
 
 Game play notes:
 
+- There is a multi-player feature available in the gameplay. Feature is currently wip, however to enable, update the `isMultiPlayer` flag in the `SnakeGame.java` file.
 - Player score is displayed on the top left hand corner of window
 - The color theme can be changed during game play 
