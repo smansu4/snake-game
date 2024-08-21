@@ -6,6 +6,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
 
+//TODO:         //Note, we can also launch SnakeGame single and multiplayer
+//        // from different files.
 public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
     private final int boardWidth;
@@ -13,6 +15,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     private Theme theme;
 
     private Snake snake;
+    private Snake snake2;
 
     private final Tile food;
     private final Random random;
@@ -20,6 +23,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     //game logic vars
     private Timer gameLoop;
 
+    private boolean isMultiplayer = true;
     private boolean gameStarted = false;
     private boolean gameOver = false;
     private boolean restart = false;
@@ -35,7 +39,11 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         addKeyListener(this);
         setFocusable(true);         //snake game to listen to event
 
-        snake = new Snake();
+        snake = new Snake(5,5);
+
+        if(isMultiplayer) {
+            snake2 = new Snake(18,5);
+        }
 
         food = new Tile(10,10);
         random = new Random();
@@ -62,12 +70,20 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         g.setColor(theme.getPalette().getFoodColor());
         g.fill3DRect(food.getX() * Tile.SIZE, food.getY() * Tile.SIZE,Tile.SIZE,Tile.SIZE, true);
 
-        //Snake
+        //Snake 1
         g.setColor(theme.getPalette().getSnakeColor());
         g.fill3DRect(snake.head.getX() * Tile.SIZE, snake.head.y * Tile.SIZE, Tile.SIZE, Tile.SIZE, true);
 
         //snakeBody
         snake.body.forEach(t -> g.fill3DRect(t.getX() * Tile.SIZE, t.getY() * Tile.SIZE, Tile.SIZE, Tile.SIZE, true));
+
+        //snake2
+        if(isMultiplayer) {
+            g.setColor(theme.getPalette().getSecondarySnakeColor());
+            g.fill3DRect(snake2.head.getX() * Tile.SIZE, snake2.head.y * Tile.SIZE, Tile.SIZE, Tile.SIZE, true);
+
+            snake2.body.forEach(t -> g.fill3DRect(t.getX() * Tile.SIZE, t.getY() * Tile.SIZE, Tile.SIZE, Tile.SIZE, true));
+        }
 
         // game over and pause screen
         if(gameOver) {
@@ -80,25 +96,52 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         g.setColor(theme.getPalette().getScoreColor());
         g.setFont(new Font("Ariel", Font.PLAIN, 20));
         g.drawString("Score: " + snake.body.size(), Tile.SIZE - 16, Tile.SIZE);
+
+//        if(isMultiplayer) {
+//            //todo: decide how to display score in UI for each player - color, location, label
+//            g.setColor(theme.getPalette().getScoreColor());
+//            g.setFont(new Font("Ariel", Font.PLAIN, 20));
+//            g.drawString("player 1 Score: " + snake.body.size(), Tile.SIZE - 16, Tile.SIZE);
+//
+//            g.setColor(theme.getPalette().getScoreColor());
+//            g.setFont(new Font("Ariel", Font.PLAIN, 20));
+//            g.drawString("Player 2 Score: " + snake2.body.size(), Tile.SIZE - 16, Tile.SIZE - 50);
+//        }
     }
 
     public void placeTile(Tile tile) {
-        tile.setX(random.nextInt(boardWidth / Tile.SIZE));   //600 /25 = 24 so rand num between 0 adn 24;
-        tile.setY(random.nextInt(boardHeight / Tile.SIZE));  //600
+        tile.setX(random.nextInt(boardWidth / Tile.SIZE));   // 600/25 = 24 so rand num between 0 adn 24;
+        tile.setY(random.nextInt(boardHeight / Tile.SIZE));  // 600
     }
 
     public boolean isCollision(Tile tile1, Tile tile2) {
         return tile1.getX() == tile2.getX() && tile1.getY() == tile2.getY();
     }
 
-    public void checkForCollision() {
-        if(isCollision(snake.head, food)) {
-            snake.eat(new Tile(food.getX(), food.getY()));
+    public void didSnakeEatFood(Snake player) {
+        if(isCollision(player.head, food)) {
+            player.eat(new Tile(food.getX(), food.getY()));
             placeTile(food);
         }
     }
 
-    public void checkGameRules() {
+    public void manageBoundaryCollision(Snake player) {
+        if(player.head.x < 0) {
+            player.head.x = 0;
+            player.velocityX = 0;
+        } else if (player.head.x == boardWidth/Tile.SIZE) {
+            player.head.x = boardWidth/Tile.SIZE - 1;
+            player.velocityX = 0;
+        } else if(player.head.y < 0) {
+            player.head.y = 0;
+            player.velocityY = 0;
+        } else if (player.head.y == boardWidth/Tile.SIZE) {
+            player.head.y = boardWidth/Tile.SIZE - 1;
+            player.velocityY = 0;
+        }
+    }
+
+    public void checkGameRules () {
         //GameOver conditions
         for (Tile snakeSegment : snake.body) {
             if (isCollision(snake.head, snakeSegment)) {
@@ -106,18 +149,47 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
             }
         }
 
-        if (snake.head.x * Tile.SIZE < 0 || snake.head.x * Tile.SIZE >= boardWidth ||
-                snake.head.y * Tile.SIZE < 0 || snake.head.y * Tile.SIZE >= boardHeight ) {
-            gameOver = true;
+        for (Tile snakeSegment : snake2.body) {
+            if (isCollision(snake2.head, snakeSegment)) {
+                gameOver = true;
+            }
         }
+
+        if(isSnakeOutOfBounds(snake)) gameOver = true;
+        if(isSnakeOutOfBounds(snake2)) gameOver = true;
     }
+
+    private boolean isSnakeOutOfBounds(Snake player) {
+        return player.head.x * Tile.SIZE < 0 || player.head.x * Tile.SIZE >= boardWidth ||
+                player.head.y * Tile.SIZE < 0 || player.head.y * Tile.SIZE >= boardHeight;
+    }
+
+//    public void checkGameRulesMultiPlayer() {
+//        //GameOver conditions
+//        for (Tile snakeSegment : snake.body) {
+//            if (isCollision(snake.head, snakeSegment)) {
+//                gameOver = true;
+//            }
+//        }
+//
+//        for (Tile snakeSegment : snake2.body) {
+//            if (isCollision(snake2.head, snakeSegment)) {
+//                gameOver = true;
+//            }
+//        }
+//    }
 
     public void restartGameState() {
         //stop snake and clear body
         snake.resetSnake();
-
         //move pieces
         placeTile(snake.head);
+
+        if(isMultiplayer) {
+            snake2.resetSnake();
+            placeTile(snake2.head);
+        }
+
         placeTile(food);
 
         //reset state
@@ -147,8 +219,13 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(gameStarted && !gameOver && !pausedGame) {
-            checkForCollision();
+            didSnakeEatFood(snake);
+            didSnakeEatFood(snake2);
+
             snake.move();
+            if(isMultiplayer) {
+                snake2.move();
+            }
             checkGameRules();
         } else if(restart) {
             restartGameState();
@@ -160,6 +237,10 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     //Key Listener methods
     @Override
     public void keyPressed(KeyEvent e) {
+
+        if(isMultiplayer) {
+            multiplayerKeyPressed(e);
+        }
 
         //snake
         if(e.getKeyCode() == KeyEvent.VK_UP && snake.velocityY != 1) {
@@ -190,6 +271,22 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         }
         else if(gameOver && e.getKeyCode() == KeyEvent.VK_ENTER) {
             restart = true;
+        }
+    }
+
+    private void multiplayerKeyPressed(KeyEvent e) {
+        if(e.getKeyCode() == KeyEvent.VK_W && snake2.velocityY != 1) {
+            snake2.velocityX = 0;
+            snake2.velocityY = -1;
+        } else if(e.getKeyCode() == KeyEvent.VK_S && snake2.velocityY != -1) {
+            snake2.velocityX = 0;
+            snake2.velocityY = 1;
+        } else if(e.getKeyCode() == KeyEvent.VK_A && snake2.velocityX != 1) {
+            snake2.velocityX = -1;
+            snake2.velocityY = 0;
+        } else if(e.getKeyCode() == KeyEvent.VK_D && snake2.velocityX != -1) {
+            snake2.velocityX = 1;
+            snake2.velocityY = 0;
         }
     }
 

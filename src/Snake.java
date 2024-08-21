@@ -8,8 +8,8 @@ public class Snake {
     int velocityX;
     int velocityY;
 
-    public Snake() {
-        head = new Tile(5,5);
+    public Snake(int x, int y) {
+        head = new Tile(x,y);
         body = new ArrayList<>();
 
         velocityX = 0;
@@ -38,11 +38,6 @@ public class Snake {
         //Snake Head
         head.x += velocityX;
         head.y += velocityY;
-    }
-
-    public void stop() {
-        velocityX = 0;
-        velocityY = 0;
     }
 
     public void eat(Tile tile) {
