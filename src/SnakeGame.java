@@ -92,21 +92,21 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
             displayScreen(g, "Paused Game", "Press enter to unpause");
         }
 
-        // display score
-        g.setColor(theme.getPalette().getScoreColor());
-        g.setFont(new Font("Ariel", Font.PLAIN, 20));
-        g.drawString("Score: " + snake.body.size(), Tile.SIZE - 16, Tile.SIZE);
+        if(isMultiplayer) {
+            //todo: decide how to display score in UI for each player - color, location, label
+            g.setColor(theme.getPalette().getScoreColor());
+            g.setFont(new Font("Ariel", Font.PLAIN, 16));
+            g.drawString("P1 Score: " + snake.body.size(), Tile.SIZE - 16, Tile.SIZE);
 
-//        if(isMultiplayer) {
-//            //todo: decide how to display score in UI for each player - color, location, label
-//            g.setColor(theme.getPalette().getScoreColor());
-//            g.setFont(new Font("Ariel", Font.PLAIN, 20));
-//            g.drawString("player 1 Score: " + snake.body.size(), Tile.SIZE - 16, Tile.SIZE);
-//
-//            g.setColor(theme.getPalette().getScoreColor());
-//            g.setFont(new Font("Ariel", Font.PLAIN, 20));
-//            g.drawString("Player 2 Score: " + snake2.body.size(), Tile.SIZE - 16, Tile.SIZE - 50);
-//        }
+            g.setColor(theme.getPalette().getScoreColor());
+            g.setFont(new Font("Ariel", Font.PLAIN, 16));
+            g.drawString("P2 Score: " + snake2.body.size(), Tile.SIZE - 16, Tile.SIZE + 25);
+        } else {
+            // display score
+            g.setColor(theme.getPalette().getScoreColor());
+            g.setFont(new Font("Ariel", Font.PLAIN, 20));
+            g.drawString("Score: " + snake.body.size(), Tile.SIZE - 16, Tile.SIZE);
+        }
     }
 
     public void placeTile(Tile tile) {
