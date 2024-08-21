@@ -22,7 +22,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     //game logic vars
     private Timer gameLoop;
 
-    private boolean isMultiplayer = false;
+    private boolean isMultiplayer = true;
     private boolean gameStarted = false;
     private boolean gameOver = false;
     private boolean restart = false;
@@ -124,6 +124,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         }
     }
 
+    //Considering for future release
     public void manageBoundaryCollision(Snake player) {
         if(player.head.x < 0) {
             player.head.x = 0;
