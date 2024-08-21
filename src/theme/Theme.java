@@ -44,6 +44,11 @@ public class Theme {
         }
 
         @Override
+        public Color getSecondarySnakeColor() {
+            return Color.MAGENTA;
+        }
+
+        @Override
         public Color getFoodColor() {
             return Color.RED;
         }
@@ -74,6 +79,11 @@ public class Theme {
         }
 
         @Override
+        public Color getSecondarySnakeColor() {
+            return new Color(0,158,115);
+        }
+
+        @Override
         public Color getFoodColor() {
             return new Color(0, 114, 178);
         }
@@ -85,7 +95,7 @@ public class Theme {
 
         @Override
         public Color getScoreColor() {
-            return new Color(0,158,115);
+            return new Color(230,159,0);
         }
     }
 }
