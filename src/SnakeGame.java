@@ -92,14 +92,13 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         }
 
         if(isMultiplayer) {
-            //todo: decide how to display score in UI for each player - color, location, label
             g.setColor(theme.getPalette().getScoreColor());
             g.setFont(new Font("Ariel", Font.PLAIN, 16));
-            g.drawString("P1 Score: " + snake.body.size(), Tile.SIZE - 16, Tile.SIZE);
+            g.drawString("P1 Score: " + snake.body.size(), Tile.SIZE * 19, Tile.SIZE);
 
             g.setColor(theme.getPalette().getScoreColor());
             g.setFont(new Font("Ariel", Font.PLAIN, 16));
-            g.drawString("P2 Score: " + snake2.body.size(), Tile.SIZE - 16, Tile.SIZE + 25);
+            g.drawString("P2 Score: " + snake2.body.size(), Tile.SIZE - 16, Tile.SIZE);
         } else {
             // display score
             g.setColor(theme.getPalette().getScoreColor());
