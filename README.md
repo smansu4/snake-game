@@ -25,7 +25,21 @@ Resources:
 - Press 'T' to change color theme 
 - To exit, close game window
 
+#### Single Player:
+
+  - Player controls snake movement with arrow keys
+
+#### Multiplayer: 
+See gameplay notes below. When enabled, two users can play against each other. 
+- Player 1 controls the snake with the arrow keys
+- Player 2 controls the snake with the WASD keys
+- Normal game rules apply:
+  - Neither snake can cross game border
+  - Snakes cannot collide into their own body (However, they can collide with each other)
+
+
 Game play notes:
 
-- Player score is displayed on the top left hand corner of window
+- There is a multi-player feature available in the gameplay. Feature is currently disabled in gameplay. To enable, update the `isMultiPlayer` flag in the `SnakeGame.java` file to `true`.
+- Player score is displayed on the top left (and right if multiplayer) hand corner of window
 - The color theme can be changed during game play 
