@@ -22,7 +22,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     //game logic vars
     private Timer gameLoop;
 
-    private boolean isMultiplayer = true;
+    private boolean isMultiplayer = false;
     private boolean gameStarted = false;
     private boolean gameOver = false;
     private boolean restart = false;
