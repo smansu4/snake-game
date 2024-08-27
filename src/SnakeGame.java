@@ -22,11 +22,12 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     //game logic vars
     private Timer gameLoop;
 
-    private boolean isMultiplayer = false;
+    private boolean multiplayerEnabled = false;
     private boolean gameStarted = false;
     private boolean gameOver = false;
     private boolean restart = false;
     private boolean pausedGame = false;
+    private boolean showOptionMenu = false;
 
     public SnakeGame(int boardWidth, int boardHeight) {
         this.theme = Theme.getInstance();
@@ -40,9 +41,12 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
         snake = new Snake(5,5);
 
-        if(isMultiplayer) {
-            snake2 = new Snake(18,5);
-        }
+        // Instantiating snake2 in case
+        // user toggles multiplayer.
+        // If not instantiated when starting
+        // up game, toggling 'M' will lead
+        // to a npe
+        snake2 = new Snake(18,5);
 
         food = new Tile(10,10);
         random = new Random();
@@ -60,8 +64,12 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
     public void draw(Graphics g) {
 
-        if(!gameStarted) {
+        if(!gameStarted && !showOptionMenu) {
             displayMainMenuScreen(g);
+            return;
+        }
+        if(showOptionMenu) {
+            showOptionMenu(g);
             return;
         }
 
@@ -77,7 +85,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         snake.body.forEach(t -> g.fill3DRect(t.getX() * Tile.SIZE, t.getY() * Tile.SIZE, Tile.SIZE, Tile.SIZE, true));
 
         //snake2
-        if(isMultiplayer) {
+        if(multiplayerEnabled) {
             g.setColor(theme.getPalette().getSecondarySnakeColor());
             g.fill3DRect(snake2.head.getX() * Tile.SIZE, snake2.head.y * Tile.SIZE, Tile.SIZE, Tile.SIZE, true);
 
@@ -91,7 +99,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
             displayScreen(g, "Paused Game", "Press enter to unpause");
         }
 
-        if(isMultiplayer) {
+        if(multiplayerEnabled) {
             g.setColor(theme.getPalette().getScoreColor());
             g.setFont(new Font("Ariel", Font.PLAIN, 16));
             g.drawString("P1 Score: " + snake.body.size(), Tile.SIZE * 19, Tile.SIZE);
@@ -153,7 +161,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         //GameOver conditions
         if(didSnakeCollideWithBody(snake) || isSnakeOutOfBounds(snake)) gameOver = true;
 
-        if(isMultiplayer) {
+        if(multiplayerEnabled) {
             if(isSnakeOutOfBounds(snake2) || isSnakeOutOfBounds(snake2)) gameOver = true;
         }
     }
@@ -169,7 +177,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         //move pieces
         placeTile(snake.head);
 
-        if(isMultiplayer) {
+        if(multiplayerEnabled) {
             snake2.resetSnake();
             placeTile(snake2.head);
         }
@@ -196,8 +204,18 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
         g.setFont(new Font("Ariel", Font.PLAIN, 12));
         g.setColor(theme.getPalette().getTextColor());
-        g.drawString("Press enter to pause game", 210, 400);
-        g.drawString("Press 'T' to change theme", 215, 425);
+        g.drawString("Press 'o' for options", 240, 425);
+    }
+
+    private void showOptionMenu(Graphics g) {
+        g.setColor(theme.getPalette().getTextColor());
+        g.setFont(new Font("Ariel", Font.PLAIN, 48));
+        g.drawString("OPTIONS MENU", boardWidth/5, boardHeight/3);
+
+        g.setColor(theme.getPalette().getTextColor());
+        g.setFont(new Font("Ariel", Font.PLAIN, 24));
+        g.drawString("Change color theme: Press ' T '", 135, 300);
+        g.drawString("Play multiplayer: Press ' M '", 160, 375);
     }
 
     @Override
@@ -205,7 +223,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         if(gameStarted && !gameOver && !pausedGame) {
             didSnakeEatFood(snake);
             snake.move();
-            if(isMultiplayer) {
+            if(multiplayerEnabled) {
                 didSnakeEatFood(snake2);
                 snake2.move();
             }
@@ -221,7 +239,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
 
-        if(isMultiplayer) {
+        if(multiplayerEnabled) {
             multiplayerKeyPressed(e);
         }
 
@@ -245,7 +263,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
             theme.toggle();
         }
 
-        // screens
+        // screens / options
         else if(!gameStarted && e.getKeyCode() == KeyEvent.VK_ENTER) {
             gameStarted = true;
         }
@@ -254,6 +272,12 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         }
         else if(gameOver && e.getKeyCode() == KeyEvent.VK_ENTER) {
             restart = true;
+        }
+        else if((!gameStarted || gameOver) && e.getKeyCode() == KeyEvent.VK_M) {
+            multiplayerEnabled = !multiplayerEnabled;
+        }
+        else if(e.getKeyCode() == KeyEvent.VK_O) {
+            showOptionMenu = !showOptionMenu;
         }
     }
 
