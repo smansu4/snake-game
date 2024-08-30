@@ -25,7 +25,6 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     private Timer gameLoop;
 
     private boolean multiplayerEnabled;
-    private boolean gameStarted = false;
     private boolean gameOver = false;
     private boolean restart = false;
     private boolean pausedGame = false;
@@ -212,7 +211,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(gameStarted && !gameOver && !pausedGame) {
+        if(!gameOver && !pausedGame) {
             didSnakeEatFood(snake);
             snake.move();
             if(multiplayerEnabled) {
