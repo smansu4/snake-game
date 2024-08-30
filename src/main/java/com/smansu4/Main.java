@@ -20,7 +20,6 @@ public class Main implements ActionListener {
     JPanel optionsMenuPanel = new JPanel();
 
     JButton playButton = new JButton("Play");
-    JButton backButton = new JButton("Back");
     JRadioButton classicThemeRadioBtn = new JRadioButton("Classic");
     JRadioButton okabeItoThemeRadioBtn = new JRadioButton("Okabe Ito");
 
@@ -100,109 +99,73 @@ public class Main implements ActionListener {
         titlePanel.add(optionsButton, titlePanelLayoutConstraint);
     }
 
-//    private void test() {
-//        JButton button;
-//        JLabel label;
-//        pane.setLayout(new GridBagLayout());
-//        GridBagConstraints c = new GridBagConstraints();
-//
-//        label = new JLabel(" SNAKE GAME");
-//        label.setFont(new Font("Lucida Grande", Font.PLAIN, 52));
-//        label.setFont(label.getFont().deriveFont(Font.BOLD));
-//        c.insets = new Insets(50,0,0,0);  //top padding
-//
-//
-//        c.fill = GridBagConstraints.HORIZONTAL;
-//        c.gridx = 1;
-//        c.gridy = 0;
-//        c.anchor= GridBagConstraints.CENTER;
-//
-//
-//       label.setSize(new Dimension(200, 200));
-//        pane.add(label, c);
-//
-////        button = new JButton("Button 2");
-////        c.fill = GridBagConstraints.HORIZONTAL;
-////        c.weightx = 0.5;
-////        c.gridx = 1;
-////        c.gridy = 0;
-////        pane.add(button, c);
-////
-////        button = new JButton("Button 3");
-////        c.fill = GridBagConstraints.HORIZONTAL;
-////        c.weightx = 0.5;
-////        c.gridx = 2;
-////        c.gridy = 0;
-////        pane.add(button, c);
-//
-//        button = new JButton("PLAY");
-//        c.fill = GridBagConstraints.HORIZONTAL;
-//        button.setPreferredSize(new Dimension(100, 50));
-//        button.setFont(new Font("Serif", Font.PLAIN, 42));
-//        button.setFont(button.getFont().deriveFont(Font.BOLD));
-//        //button.setForeground(Color.GREEN);
-//        //button.setBackground(Color.YELLOW);
-//        //button.setOpaque(true);
-//        //button.setBorderPainted(false);
-//        //Border border = BorderFactory.createLineBorder(Color.BLACK);
-//        //button.setBorder(border);
-//
-//
-//        c.insets = new Insets(50,0,0,0);  //top padding
-//
-//
-//
-//        c.ipady = 40;      //make this component tall
-//        //c.ipadx = 200;
-//        c.weightx = 0.0;
-//        c.gridwidth = 2;
-//        c.gridx = 0;
-//        c.gridy = 1;
-//        pane.add(button, c);
-//
-//        button = new JButton("Options");
-//        c.fill = GridBagConstraints.HORIZONTAL;
-//        c.ipady = 0;       //reset to default
-//        //c.weighty = 1.0;   //request any extra vertical space
-//        c.anchor = GridBagConstraints.PAGE_END; //bottom of space
-//        c.insets = new Insets(50,50,0,50);  //top padding
-//        c.gridx = 1;       //aligned with button 2
-//        c.gridwidth = 1;   //2 columns wide
-//        c.gridy = 2;       //third row
-//        pane.add(button, c);
-//    }
-
     public void setUpOptionsMenu() {
-        JLabel titleLabel = new JLabel("Main Menu");
-        titleLabel.setFont(new Font("Serif", Font.PLAIN, 48));
+        Insets inset_top_0 = new Insets(0, 0, 0, 0);
+        Insets inset_top_20 = new Insets(20, 0, 0, 0);
 
-        titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD));
-        titleLabel.setSize(70, 70);
+        JLabel optionsLabel = new JLabel("Options");
+        optionsLabel.setFont(new Font("Serif", Font.PLAIN, 48));
+        optionsLabel.setFont(optionsLabel.getFont().deriveFont(Font.BOLD));
 
+        optionsMenuPanel.setLayout(new GridBagLayout());
+        GridBagConstraints optionsPanelLayoutConstraint = new GridBagConstraints();
+
+        optionsPanelLayoutConstraint.insets = inset_top_0;
+        optionsPanelLayoutConstraint.fill = GridBagConstraints.HORIZONTAL;
+        optionsPanelLayoutConstraint.gridx = 0;
+        optionsPanelLayoutConstraint.gridy = 0;
+        optionsMenuPanel.add(optionsLabel, optionsPanelLayoutConstraint);
+
+
+        //Color Theme Layout
         JLabel themeSelectionLabel = new JLabel("Select a Color Theme: ");
-        JLabel gameModeLabel = new JLabel("Select a Game Mode: ");
-        optionsMenuPanel.setLayout(new BoxLayout(optionsMenuPanel, BoxLayout.Y_AXIS));
-        optionsMenuPanel.setBorder(BorderFactory.createEmptyBorder(windowHeight/4, windowHeight/4, windowHeight/4, windowHeight/4));
+
+        optionsPanelLayoutConstraint.insets = inset_top_20;
+        optionsPanelLayoutConstraint.gridy = 1;
+        optionsMenuPanel.add(themeSelectionLabel, optionsPanelLayoutConstraint);
 
 
-        optionsMenuPanel.add(titleLabel);
+        optionsPanelLayoutConstraint.insets = inset_top_0;
+        optionsPanelLayoutConstraint.gridy = 2;
 
-        optionsMenuPanel.add(themeSelectionLabel);
-        optionsMenuPanel.add(classicThemeRadioBtn);
         classicThemeRadioBtn.setSelected(true);
         classicThemeRadioBtn.addActionListener(this);
+        optionsMenuPanel.add(classicThemeRadioBtn,optionsPanelLayoutConstraint);
 
-        optionsMenuPanel.add(okabeItoThemeRadioBtn);
+        optionsPanelLayoutConstraint.insets = inset_top_0;
+        optionsPanelLayoutConstraint.gridy = 3;
         okabeItoThemeRadioBtn.addActionListener(this);
+        optionsMenuPanel.add(okabeItoThemeRadioBtn, optionsPanelLayoutConstraint);
 
-        optionsMenuPanel.add(gameModeLabel);
-        optionsMenuPanel.add(singlePlayerRadioBtn);
+
+        //Game Mode Layout
+        JLabel gameModeLabel = new JLabel("Select a Game Mode: ");
+
+        optionsPanelLayoutConstraint.insets = inset_top_20;
+        optionsPanelLayoutConstraint.gridy = 4;
+        optionsMenuPanel.add(gameModeLabel, optionsPanelLayoutConstraint);
+
+
+        optionsPanelLayoutConstraint.insets = inset_top_0;
+        optionsPanelLayoutConstraint.gridy = 5;
         singlePlayerRadioBtn.setSelected(true);
         singlePlayerRadioBtn.addActionListener(this);
-        optionsMenuPanel.add(multiPlayerRadioBtn);
-        multiPlayerRadioBtn.addActionListener(this);
+        optionsMenuPanel.add(singlePlayerRadioBtn, optionsPanelLayoutConstraint);
 
-        optionsMenuPanel.add(backButton);
+        optionsPanelLayoutConstraint.gridy = 6;
+        multiPlayerRadioBtn.addActionListener(this);
+        optionsMenuPanel.add(multiPlayerRadioBtn, optionsPanelLayoutConstraint);
+
+
+        //Back Button Layout
+        JButton backButton = new JButton("Back");
+
+        optionsPanelLayoutConstraint.insets = inset_top_20;
+        optionsPanelLayoutConstraint.anchor = GridBagConstraints.PAGE_END; //bottom of space
+        optionsPanelLayoutConstraint.gridx = 0;
+        optionsPanelLayoutConstraint.gridy = 7;
+
+        optionsMenuPanel.add(backButton, optionsPanelLayoutConstraint);
         backButton.addActionListener(this);
     }
 

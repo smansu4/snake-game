@@ -190,25 +190,6 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         g.drawString(subtitle, 185, 330);
     }
 
-//    private void displayMainMenuScreen(Graphics g) {
-//        displayScreen(g, "SNAKE GAME", "Press enter to play");
-//
-//        g.setFont(new Font("Ariel", Font.PLAIN, 12));
-//        g.setColor(theme.getPalette().getTextColor());
-//        g.drawString("Press 'o' for options", 240, 425);
-//    }
-//
-//    private void showOptionMenu(Graphics g) {
-//        g.setColor(theme.getPalette().getTextColor());
-//        g.setFont(new Font("Ariel", Font.PLAIN, 48));
-//        g.drawString("OPTIONS MENU", boardWidth/5, boardHeight/3);
-//
-//        g.setColor(theme.getPalette().getTextColor());
-//        g.setFont(new Font("Ariel", Font.PLAIN, 24));
-//        g.drawString("Change color theme: Press ' T '", 135, 300);
-//        g.drawString("Play multiplayer: Press ' M '", 160, 375);
-//    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if(!gameOver && !pausedGame) {
