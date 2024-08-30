@@ -1,4 +1,4 @@
-package theme;
+package com.smansu4.theme;
 
 import java.awt.*;
 

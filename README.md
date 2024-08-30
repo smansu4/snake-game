@@ -22,7 +22,7 @@ Resources:
 
 - Press 'Enter' to start, pause, and restart game
 - Use the arrow keys on the keyboard to move snake
-- Press 'T' to change color theme 
+- Press 'T' to change color main.java.main.java.com.smansu4.theme 
 - To exit, close game window
 
 #### Single Player:

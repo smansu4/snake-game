@@ -1,4 +1,4 @@
-package theme;
+package com.smansu4.theme;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -27,6 +27,14 @@ public class Theme {
 
     public ColorPalette toggle() {
         useDefaultTheme = !useDefaultTheme;
+        return getPalette();
+    }
+
+    public ColorPalette toggle(String paletteName) {
+        if(!"Classic".equals(paletteName)) {
+            useDefaultTheme = !useDefaultTheme;
+        }
+
         return getPalette();
     }
 

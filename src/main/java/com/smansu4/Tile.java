@@ -1,4 +1,4 @@
-
+package com.smansu4;
 
 public class Tile {
     public static final int SIZE = 25;
