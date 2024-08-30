@@ -16,23 +16,18 @@ public class Main implements ActionListener {
     private Theme colorTheme = Theme.getInstance();
     private boolean isMultiplayer = false;
 
-    JPanel titlePanel = new JPanel();
-    JPanel optionsMenuPanel = new JPanel();
-
-    JButton playButton = new JButton("Play");
-    JRadioButton classicThemeRadioBtn = new JRadioButton("Classic");
-    JRadioButton okabeItoThemeRadioBtn = new JRadioButton("Okabe Ito");
+    JRadioButton darkThemeRadioBtn = new JRadioButton("Dark");
+    JRadioButton lightThemeRadioBtn = new JRadioButton("Light");
 
     JRadioButton singlePlayerRadioBtn = new JRadioButton("Single Player");
     JRadioButton multiPlayerRadioBtn = new JRadioButton("Multi Player");
 
+    JPanel optionsMenuPanel = setUpOptionsMenu();
+
 
     public Main() {
         initialize();
-
-        setUpTitlePage();
-        setUpOptionsMenu();
-        frame.add(titlePanel);
+        frame.add(optionsMenuPanel);
     }
 
     public void initialize() {
@@ -41,7 +36,7 @@ public class Main implements ActionListener {
         frame.setSize(windowWidth, windowHeight);
         frame.setLocationRelativeTo(null);          //open window in middle of screen
         frame.setResizable(false);
-        frame.setBackground(Color.BLACK);
+        //frame.setBackground(Color.BLACK);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
@@ -52,58 +47,65 @@ public class Main implements ActionListener {
         snakeGame.requestFocus();
     }
 
-    public void setUpTitlePage() {
-        JLabel titleLabel = new JLabel(" SNAKE GAME");
+//    public JPanel setUpTitlePage() {
+//        JPanel titlePanel = new JPanel();
+//
+//        JLabel titleLabel = new JLabel(" SNAKE GAME");
+//
+//        titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 52));
+//        titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD));
+//        titleLabel.setSize(new Dimension(200, 200));
+//        titleLabel.setForeground(colorTheme.getPalette().getTextColor());
+//
+//        titlePanel.setBackground(colorTheme.getPalette().getBackgroundColor());
+//        titlePanel.setLayout(new GridBagLayout());
+//
+//        GridBagConstraints titlePanelLayoutConstraint = new GridBagConstraints();
+//
+//        titlePanelLayoutConstraint.insets = new Insets(50,0,0,0);  //top padding
+//        titlePanelLayoutConstraint.fill = GridBagConstraints.HORIZONTAL;
+//        titlePanelLayoutConstraint.anchor= GridBagConstraints.CENTER;
+//        titlePanelLayoutConstraint.gridx = 1;
+//        titlePanelLayoutConstraint.gridy = 0;
+//
+//        titlePanel.add(titleLabel, titlePanelLayoutConstraint);
+//
+//        JButton playButton = new JButton("Play");
+//        playButton.setPreferredSize(new Dimension(100, 50));
+//        playButton.setFont(new Font("Serif", Font.PLAIN, 42));
+//        playButton.setFont(playButton.getFont().deriveFont(Font.BOLD));
+//        playButton.addActionListener(this);
+//
+//        titlePanelLayoutConstraint.ipady = 40;      //make this component tall
+//        titlePanelLayoutConstraint.weightx = 0.0;
+//        titlePanelLayoutConstraint.gridwidth = 2;
+//        titlePanelLayoutConstraint.gridx = 0;
+//        titlePanelLayoutConstraint.gridy = 1;
+//
+//        titlePanel.add(playButton, titlePanelLayoutConstraint);
+//
+//        JButton optionsButton = new JButton("Options");
+//        optionsButton.addActionListener(this);
+//
+//        titlePanelLayoutConstraint.insets = new Insets(50,50,0,50);  //top padding
+//        titlePanelLayoutConstraint.anchor = GridBagConstraints.PAGE_END; //bottom of space
+//        titlePanelLayoutConstraint.gridwidth = 1;   //2 columns wide
+//        titlePanelLayoutConstraint.ipady = 0;       //reset to default
+//        titlePanelLayoutConstraint.gridx = 1;       //aligned with button 2
+//        titlePanelLayoutConstraint.gridy = 2;       //third row
+//
+//        titlePanel.add(optionsButton, titlePanelLayoutConstraint);
+//
+//        return titlePanel;
+//    }
 
-        titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 52));
-        titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD));
-        titleLabel.setSize(new Dimension(200, 200));
-        titleLabel.setForeground(Color.GREEN);
+    public JPanel setUpOptionsMenu() {
+        JPanel optionsMenuPanel = new JPanel();
 
-        titlePanel.setBackground(Color.BLACK);
-        titlePanel.setLayout(new GridBagLayout());
-
-        GridBagConstraints titlePanelLayoutConstraint = new GridBagConstraints();
-
-        titlePanelLayoutConstraint.insets = new Insets(50,0,0,0);  //top padding
-        titlePanelLayoutConstraint.fill = GridBagConstraints.HORIZONTAL;
-        titlePanelLayoutConstraint.anchor= GridBagConstraints.CENTER;
-        titlePanelLayoutConstraint.gridx = 1;
-        titlePanelLayoutConstraint.gridy = 0;
-
-        titlePanel.add(titleLabel, titlePanelLayoutConstraint);
-
-        playButton.setPreferredSize(new Dimension(100, 50));
-        playButton.setFont(new Font("Serif", Font.PLAIN, 42));
-        playButton.setFont(playButton.getFont().deriveFont(Font.BOLD));
-        playButton.addActionListener(this);
-
-        titlePanelLayoutConstraint.ipady = 40;      //make this component tall
-        titlePanelLayoutConstraint.weightx = 0.0;
-        titlePanelLayoutConstraint.gridwidth = 2;
-        titlePanelLayoutConstraint.gridx = 0;
-        titlePanelLayoutConstraint.gridy = 1;
-
-        titlePanel.add(playButton, titlePanelLayoutConstraint);
-
-        JButton optionsButton = new JButton("Options");
-        optionsButton.addActionListener(this);
-
-        titlePanelLayoutConstraint.insets = new Insets(50,50,0,50);  //top padding
-        titlePanelLayoutConstraint.anchor = GridBagConstraints.PAGE_END; //bottom of space
-        titlePanelLayoutConstraint.gridwidth = 1;   //2 columns wide
-        titlePanelLayoutConstraint.ipady = 0;       //reset to default
-        titlePanelLayoutConstraint.gridx = 1;       //aligned with button 2
-        titlePanelLayoutConstraint.gridy = 2;       //third row
-
-        titlePanel.add(optionsButton, titlePanelLayoutConstraint);
-    }
-
-    public void setUpOptionsMenu() {
         Insets inset_top_0 = new Insets(0, 0, 0, 0);
         Insets inset_top_20 = new Insets(20, 0, 0, 0);
 
-        JLabel optionsLabel = new JLabel("Options");
+        JLabel optionsLabel = new JLabel("Snake Game");
         optionsLabel.setFont(new Font("Serif", Font.PLAIN, 48));
         optionsLabel.setFont(optionsLabel.getFont().deriveFont(Font.BOLD));
 
@@ -128,14 +130,14 @@ public class Main implements ActionListener {
         optionsPanelLayoutConstraint.insets = inset_top_0;
         optionsPanelLayoutConstraint.gridy = 2;
 
-        classicThemeRadioBtn.setSelected(true);
-        classicThemeRadioBtn.addActionListener(this);
-        optionsMenuPanel.add(classicThemeRadioBtn,optionsPanelLayoutConstraint);
+        darkThemeRadioBtn.setSelected(true);
+        darkThemeRadioBtn.addActionListener(this);
+        optionsMenuPanel.add(darkThemeRadioBtn,optionsPanelLayoutConstraint);
 
         optionsPanelLayoutConstraint.insets = inset_top_0;
         optionsPanelLayoutConstraint.gridy = 3;
-        okabeItoThemeRadioBtn.addActionListener(this);
-        optionsMenuPanel.add(okabeItoThemeRadioBtn, optionsPanelLayoutConstraint);
+        lightThemeRadioBtn.addActionListener(this);
+        optionsMenuPanel.add(lightThemeRadioBtn, optionsPanelLayoutConstraint);
 
 
         //Game Mode Layout
@@ -158,15 +160,17 @@ public class Main implements ActionListener {
 
 
         //Back Button Layout
-        JButton backButton = new JButton("Back");
+        JButton playButton = new JButton("Play");
 
         optionsPanelLayoutConstraint.insets = inset_top_20;
         optionsPanelLayoutConstraint.anchor = GridBagConstraints.PAGE_END; //bottom of space
         optionsPanelLayoutConstraint.gridx = 0;
         optionsPanelLayoutConstraint.gridy = 7;
 
-        optionsMenuPanel.add(backButton, optionsPanelLayoutConstraint);
-        backButton.addActionListener(this);
+        optionsMenuPanel.add(playButton, optionsPanelLayoutConstraint);
+        playButton.addActionListener(this);
+
+        return optionsMenuPanel;
     }
 
     @Override
@@ -174,15 +178,17 @@ public class Main implements ActionListener {
         System.out.println(e.getActionCommand());
 
         switch (e.getActionCommand()) {
-            case "Classic":
-                classicThemeRadioBtn.setSelected(true);
-                okabeItoThemeRadioBtn.setSelected(false);
-                colorTheme.toggle("Classic");
+            case "Dark":
+                darkThemeRadioBtn.setSelected(true);
+                lightThemeRadioBtn.setSelected(false);
+                colorTheme.useClassicTheme(true);
+
                 break;
-            case "Okabe Ito":
-                classicThemeRadioBtn.setSelected(false);
-                okabeItoThemeRadioBtn.setSelected(true);
-                colorTheme.toggle("Okabe Ito");
+            case "Light":
+                darkThemeRadioBtn.setSelected(false);
+                lightThemeRadioBtn.setSelected(true);
+                colorTheme.useClassicTheme(false);
+
                 break;
             case "Single Player":
                 singlePlayerRadioBtn.setSelected(true);
@@ -194,32 +200,9 @@ public class Main implements ActionListener {
                 multiPlayerRadioBtn.setSelected(true);
                 isMultiplayer = true;
                 break;
-            case "Options":
-                frame.remove(titlePanel);
-                frame.add(optionsMenuPanel);
-
-                optionsMenuPanel.setVisible(true);
-                titlePanel.setVisible(false);
-
-                frame.revalidate();
-
-                break;
-            case "Back":
-                frame.remove(optionsMenuPanel);
-                frame.add(titlePanel);
-
-                optionsMenuPanel.setVisible(false);
-                titlePanel.setVisible(true);
-
-                frame.revalidate();
-
-                break;
             case "Play":
                 frame.remove(optionsMenuPanel);
-                frame.remove(titlePanel);
-
                 optionsMenuPanel.setVisible(false);
-                titlePanel.setVisible(false);
 
                 frame.revalidate();
 

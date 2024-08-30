@@ -13,8 +13,8 @@ public class Theme {
 
     private Theme() {
         themesList = new ArrayList<>();
-        themesList.add(new ClassicTheme());
-        themesList.add(new OkabeItoTheme());
+        themesList.add(new Dark());
+        themesList.add(new Light());
     }
 
     public static Theme getInstance() {
@@ -25,17 +25,9 @@ public class Theme {
         return theme;
     }
 
-    public ColorPalette toggle() {
-        useDefaultTheme = !useDefaultTheme;
-        return getPalette();
-    }
-
-    public ColorPalette toggle(String paletteName) {
-        if(!"Classic".equals(paletteName)) {
-            useDefaultTheme = !useDefaultTheme;
-        }
-
-        return getPalette();
+    public ColorPalette useClassicTheme(boolean darkSelected) {
+        useDefaultTheme = darkSelected;
+        return darkSelected ? themesList.get(0) : themesList.get(1);
     }
 
     public ColorPalette getPalette() {
@@ -45,7 +37,7 @@ public class Theme {
         return themesList.get(1);
     }
 
-    private static final class ClassicTheme implements ColorPalette {
+    private static final class Dark implements ColorPalette {
         @Override
         public Color getSnakeColor() {
             return Color.GREEN;
@@ -70,6 +62,11 @@ public class Theme {
         public Color getScoreColor() {
             return Color.WHITE;
         }
+
+        @Override
+        public Color getBackgroundColor() {
+            return Color.BLACK;
+        }
     }
 
     /**
@@ -80,7 +77,7 @@ public class Theme {
      * This theme was chosen because it also contains black and I prefer black for
      * the background.
      */
-    private static final class OkabeItoTheme implements ColorPalette {
+    private static final class Light implements ColorPalette {
         @Override
         public Color getSnakeColor() {
             return new Color(240, 228, 66);
@@ -104,6 +101,11 @@ public class Theme {
         @Override
         public Color getScoreColor() {
             return new Color(230,159,0);
+        }
+
+        @Override
+        public Color getBackgroundColor() {
+            return new Color(245,245,245);
         }
     }
 }
