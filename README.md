@@ -41,3 +41,13 @@ Game play notes:
 
 - Player score is displayed on the top left (and right if multiplayer) hand corner of window
 - The color theme can be changed during game play 
+
+Development Notes: 
+TBD
+
+### TODOs:
+1. Have menus change theme
+2. How to handle restart screen => use paint or JFrames?
+3. Differentiate player colors
+4. Game over direct back to main menu
+5. High score tracking

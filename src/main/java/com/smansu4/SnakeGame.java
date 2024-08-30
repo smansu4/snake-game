@@ -41,12 +41,6 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         setFocusable(true);         //snake game to listen to event
 
         snake = new Snake(5,5);
-
-        // Instantiating snake2 in case
-        // user toggles multiplayer.
-        // If not instantiated when starting
-        // up game, toggling 'M' will lead
-        // to a npe
         snake2 = new Snake(18,5);
 
         food = new Tile(10,10);
