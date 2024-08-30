@@ -26,7 +26,6 @@ public class Main implements ActionListener {
 
     public Main() {
         initialize();
-        frame.add(optionsMenuPanel);
     }
 
     public void initialize() {
@@ -36,6 +35,7 @@ public class Main implements ActionListener {
         frame.setLocationRelativeTo(null);          //open window in middle of screen
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.add(optionsMenuPanel);
     }
 
     public void startGame() {
@@ -121,8 +121,6 @@ public class Main implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println(e.getActionCommand());
-
         switch (e.getActionCommand()) {
             case "Dark":
                 darkThemeRadioBtn.setSelected(true);
