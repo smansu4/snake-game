@@ -43,8 +43,9 @@ Game play notes:
 - The color theme can be changed during game play 
 
 Development Notes: 
-TBD
+- Decided to change the painted options menu to a jPanel with UI components. The buttons allowed the user to more easily select game settings vs users needing to read instructions in small text and toggle keys.
+- Decided not to toggle color of main menu as swing does not allow user to change button color easily. The background setting changes the UI behind the button. Setting opacity replaced the button look and feel with a rectangular box. The original silver buttons also look good against the dark theme black background either.
+- The color-blind friendly theme was changed into a light mode. There wasn't a nice way to preview the color changes in the menu for the user without having to recreate the jpanel (to pick up new theme with each button toggle). Both options would have displayed a black game background with little difference in colors. It seemed more intuitive to rename the two themes as light and dark and set background accordingly. 
 
 ### TODOs:
-2. How to handle restart screen => use paint or JFrames?
 4. Game over direct back to main menu
