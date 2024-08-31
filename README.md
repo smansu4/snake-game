@@ -10,7 +10,7 @@ Additional features (not in the tutorial) have been added:
 - Restart feature allowing users to replay without exiting game window
 - Support for color-blind friendly color palette (toggleable in game)
 - Pause feature allowing players to stop game without losing progress 
-- Main menu and options menu screen
+- Main menu screen with options
 
 Resources: 
 - This project is based on the tutorial: https://www.youtube.com/watch?v=Y62MJny9LHg
@@ -46,8 +46,6 @@ Development Notes:
 TBD
 
 ### TODOs:
-1. Have menus change theme
 2. How to handle restart screen => use paint or JFrames?
-3. Differentiate player colors
 4. Game over direct back to main menu
 5. High score tracking

@@ -146,7 +146,6 @@ public class Main implements ActionListener {
                 frame.remove(optionsMenuPanel);
                 optionsMenuPanel.removeAll();
                 optionsMenuPanel.setVisible(false);
-                frame.revalidate();
                 startGame();
                 break;
             default:
