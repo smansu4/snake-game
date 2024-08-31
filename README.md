@@ -20,7 +20,7 @@ Resources:
 
 ## How to play
 
-- Press 'Enter' to pause, and restart game
+- Press space bar to pause, unpause, and restart game
 - Use the arrow keys on the keyboard to move snake
 - To exit, close game window
 
@@ -48,4 +48,3 @@ TBD
 ### TODOs:
 2. How to handle restart screen => use paint or JFrames?
 4. Game over direct back to main menu
-5. High score tracking

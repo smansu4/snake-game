@@ -86,14 +86,14 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         // game over and pause screen
         if(gameOver) {
             checkForHighScore();
-            displayScreen(g, "Game Over!", "Press enter to replay");
+            displayScreen(g, "Game Over!", "Press space to replay");
 
             g.setColor(theme.getPalette().getTextColor());
             g.setFont(new Font("Ariel", Font.PLAIN, 24));
             g.drawString("High Score: " + highScore, 225, 280);
 
         } else if(pausedGame) {
-            displayScreen(g, "Paused Game", "Press enter to unpause");
+            displayScreen(g, "Paused Game", "Press space to unpause");
         }
 
         if(multiplayerEnabled) {
@@ -241,9 +241,9 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         } else if(e.getKeyCode() == KeyEvent.VK_RIGHT && snake.velocityX != -1) {
             snake.velocityX = 1;
             snake.velocityY = 0;
-        } else if(!gameOver && e.getKeyCode() == KeyEvent.VK_ENTER) {
+        } else if(!gameOver && e.getKeyCode() == KeyEvent.VK_SPACE) {
             pausedGame = !pausedGame;
-        } else if(gameOver && e.getKeyCode() == KeyEvent.VK_ENTER) {
+        } else if(gameOver && e.getKeyCode() == KeyEvent.VK_SPACE) {
             restart = true;
         }
     }
