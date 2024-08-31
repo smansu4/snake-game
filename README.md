@@ -49,6 +49,13 @@ Development Notes:
 - Made the design choice to make the `Theme` class a singleton. This was because originally the theme was changed via toggling the `T` key. I didn't want to instantiate new instances of the themes each key press while user was deciding. The singleton pattern was used to ensure only once instance of each theme would exist.
   - Now there is a menu for theme selection and user does not see the UI change in real time with the selection. The implementation of the theme can be changed to only instantiate when the user clicks play. The `Theme.java` file can be completely removed after moving the inner classes to their own file. The `ColorPalette` interface can be used to reference the selected color theme.
 
+
+### Images: 
+![Screenshot of game menu](src/main/resources/imgs/optionsMenu.png?raw=true "Option Menu seen upon app start up")
+![Screenshot of single player game in dark mode](src/main/resources/imgs/single-player-dark-mode.png?raw=true "Single player dark mode")
+![Screenshot of multi plauer game in light mode](src/main/resources/imgs/multi-player-light-mode.png?raw=true "Multi player dark mode")
+
+
 ### TODOs:
 4. Game over direct back to main menu
 5. have a JPanel for game over and pause?

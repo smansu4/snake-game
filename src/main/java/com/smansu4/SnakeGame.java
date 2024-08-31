@@ -46,8 +46,8 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         addKeyListener(this);
         setFocusable(true);         //snake game to listen to event
 
-        snake = new Snake(5,5);
-        snake2 = new Snake(18,5);
+        snake = new Snake(18,5);
+        snake2 = new Snake(5,5);
 
         food = new Tile(10,10);
         random = new Random();
@@ -93,17 +93,18 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
             g.drawString("High Score: " + highScore, 225, 280);
 
         } else if(pausedGame) {
-            displayScreen(g, "Paused Game", "Press space to unpause");
+            //displayScreen(g, "Paused Game", "Press space to unpause");
         }
 
         if(multiplayerEnabled) {
             g.setColor(theme.getPalette().getSecondarySnakeColor());
             g.setFont(new Font("Ariel", Font.PLAIN, 16));
-            g.drawString("Score: " + snake.body.size(), Tile.SIZE * 19, Tile.SIZE);
+            g.drawString("Score: " + snake2.body.size(), Tile.SIZE - 16, Tile.SIZE);
+
 
             g.setColor(theme.getPalette().getSnakeColor());
             g.setFont(new Font("Ariel", Font.PLAIN, 16));
-            g.drawString("Score: " + snake2.body.size(), Tile.SIZE - 16, Tile.SIZE);
+            g.drawString("Score: " + snake.body.size(), Tile.SIZE * 19, Tile.SIZE);
         } else {
             // display score
             g.setColor(theme.getPalette().getTextColor());
