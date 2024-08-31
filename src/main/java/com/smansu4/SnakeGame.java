@@ -6,13 +6,18 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
+import java.util.Scanner;
 
 
 public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
     private final int boardWidth;
     private final int boardHeight;
+    private int highScore = 0;
     private Theme theme;
 
     private Snake snake;
@@ -30,11 +35,12 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     private boolean pausedGame = false;
 
     public SnakeGame(int boardWidth, int boardHeight, Theme theme, boolean isMultiplayer) {
-        this.theme = theme;
-        this.multiplayerEnabled = isMultiplayer;
-
         this.boardWidth = boardWidth;
         this.boardHeight = boardHeight;
+        this.theme = theme;
+        this.multiplayerEnabled = isMultiplayer;
+        readHighScore();
+
         setPreferredSize(new Dimension(this.boardWidth, this.boardHeight));
         setBackground(theme.getPalette().getBackgroundColor());
         addKeyListener(this);
@@ -79,7 +85,13 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
         // game over and pause screen
         if(gameOver) {
+            checkForHighScore();
             displayScreen(g, "Game Over!", "Press enter to replay");
+
+            g.setColor(theme.getPalette().getTextColor());
+            g.setFont(new Font("Ariel", Font.PLAIN, 24));
+            g.drawString("High Score: " + highScore, 225, 280);
+
         } else if(pausedGame) {
             displayScreen(g, "Paused Game", "Press enter to unpause");
         }
@@ -94,7 +106,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
             g.drawString("Score: " + snake2.body.size(), Tile.SIZE - 16, Tile.SIZE);
         } else {
             // display score
-            g.setColor(theme.getPalette().getScoreColor());
+            g.setColor(theme.getPalette().getTextColor());
             g.setFont(new Font("Ariel", Font.PLAIN, 20));
             g.drawString("Score: " + snake.body.size(), Tile.SIZE - 16, Tile.SIZE);
         }
@@ -113,6 +125,13 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         if(isCollision(player.head, food)) {
             player.eat(new Tile(food.getX(), food.getY()));
             placeTile(food);
+        }
+    }
+
+    public void checkForHighScore() {
+        if(snake.body.size() > highScore || snake2.body.size() > highScore) {
+            highScore = Math.max(snake.body.size(), snake2.body.size());
+            updateHighScore(highScore);
         }
     }
 
@@ -242,6 +261,28 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         } else if(e.getKeyCode() == KeyEvent.VK_D && snake2.velocityX != -1) {
             snake2.velocityX = 1;
             snake2.velocityY = 0;
+        }
+    }
+
+    private void readHighScore()  {
+        try {
+            File file = new File("src/main/resources/highScore.txt");
+            Scanner scanner = new Scanner(file);
+            highScore = scanner.nextInt();
+            scanner.close();
+        } catch (IOException e) {
+            System.out.println("Error reading highScore.txt");
+            highScore = 0;
+        }
+    }
+
+    private void updateHighScore(int currentScore) {
+        try {
+            FileWriter writer = new FileWriter("src/main/resources/highScore.txt");
+            writer.write(String.valueOf(currentScore));
+            writer.close();
+        } catch(IOException e) {
+            System.out.println("highScore.txt not found");
         }
     }
 

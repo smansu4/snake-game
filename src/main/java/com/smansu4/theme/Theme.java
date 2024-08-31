@@ -55,11 +55,6 @@ public class Theme {
 
         @Override
         public Color getTextColor() {
-            return Color.RED;
-        }
-
-        @Override
-        public Color getScoreColor() {
             return Color.WHITE;
         }
 
@@ -96,11 +91,6 @@ public class Theme {
         @Override
         public Color getTextColor() {
             return new Color(213, 94, 0);
-        }
-
-        @Override
-        public Color getScoreColor() {
-            return new Color(230,159,0);
         }
 
         @Override

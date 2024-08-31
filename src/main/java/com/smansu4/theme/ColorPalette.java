@@ -8,6 +8,5 @@ public interface ColorPalette {
     Color getSecondarySnakeColor();
     Color getFoodColor();
     Color getTextColor();
-    Color getScoreColor();
     Color getBackgroundColor();
 }
