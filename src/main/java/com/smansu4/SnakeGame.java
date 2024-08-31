@@ -93,7 +93,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
             g.drawString("High Score: " + highScore, 225, 280);
 
         } else if(pausedGame) {
-            //displayScreen(g, "Paused Game", "Press space to unpause");
+            displayScreen(g, "Paused Game", "Press space to unpause");
         }
 
         if(multiplayerEnabled) {
