@@ -10,7 +10,9 @@ Additional features (not in the tutorial) have been added:
 - Restart feature allowing users to replay without exiting game window
 - Support for color-blind friendly color palette (toggleable in game)
 - Pause feature allowing players to stop game without losing progress 
-- Main menu screen with options
+- Multiplayer option for competitive players
+- Main menu screen with game options
+- High score with persistence between game launches
 
 Resources: 
 - This project is based on the tutorial: https://www.youtube.com/watch?v=Y62MJny9LHg
@@ -44,7 +46,8 @@ Game play notes:
 Development Notes: 
 - Changed the painted options menu to a JPanel with UI components for cleaner look. The buttons allowed the user to more easily select game settings vs having to read instructions in small text and toggle keys.
 - Decided not to toggle color of main menu as swing does not allow user to change button color easily. The background setting changes the screen color behind the button. Updating opacity replaced the button look and feel with a rectangular box. The original silver buttons did not look good against the dark theme black background.
-- The color-blind friendly theme was changed into a light mode. There wasn't a nice way to preview the color changes in the menu for the user without having to recreate the JPanel (to pick up new theme with each key press). Both options would have displayed a black game background with little difference in colors. It seemed more intuitive to rename the two themes as light and dark and set background accordingly.
+- The color-blind friendly theme was changed into a light mode. There wasn't a nice way to preview the color changes in the menu for the user without having to recreate the JPanel (to pick up new theme with each key press). Both options would have displayed a black game background with seemingly little difference in colors. Renaming the two themes as light and dark and set background accordingly was more intuitive for users.
+  - The game text/snake/food in light mode uses color-blind friendly colors against the lighter background.
 - Made the design choice to make the `Theme` class a singleton. This was because originally the theme was changed via toggling the `T` key. I didn't want to instantiate new instances of the themes each key press while user was deciding. The singleton pattern was used to ensure only once instance of each theme would exist.
   - Now there is a menu for theme selection and user does not see the UI change in real time with the selection. The implementation of the theme can be changed to only instantiate when the user clicks play. The `Theme.java` file can be completely removed after moving the inner classes to their own file. The `ColorPalette` interface can be used to reference the selected color theme.
 
