@@ -43,11 +43,11 @@ Game play notes:
 - The color theme can be changed during game play 
 
 Development Notes: 
-- Changed the painted options menu to a jPanel with UI components for cleaner look. The buttons allowed the user to more easily select game settings vs users needing to read instructions in small text and toggle keys.
+- Changed the painted options menu to a JPanel with UI components for cleaner look. The buttons allowed the user to more easily select game settings vs users needing to read instructions in small text and toggle keys.
 - Decided not to toggle color of main menu as swing does not allow user to change button color easily. The background setting changes the UI behind the button. Setting opacity replaced the button look and feel with a rectangular box. The original silver buttons also look good against the dark theme black background either.
 - The color-blind friendly theme was changed into a light mode. There wasn't a nice way to preview the color changes in the menu for the user without having to recreate the jpanel (to pick up new theme with each button toggle). Both options would have displayed a black game background with little difference in colors. It seemed more intuitive to rename the two themes as light and dark and set background accordingly.
 - Made the design choice to make the `Theme` class a singleton. This was because originally the theme was changed via toggling the `T` key. I didn't want to instantiate new instances of the themes each key press while user was deciding. The singleton pattern was used to ensure only once instance of each theme would exist.
-  - Now there is a menu for theme selection and user does not see the UI change in real time with the selection. The implementation of the theme can be changed to only instantiate when the user clicks play. The `Theme.java` file can be completely removed and the `ColorPalette` interface can be used to reference the selected color theme.
+  - Now there is a menu for theme selection and user does not see the UI change in real time with the selection. The implementation of the theme can be changed to only instantiate when the user clicks play. The `Theme.java` file can be completely removed after moving the inner classes to their own file. The `ColorPalette` interface can be used to reference the selected color theme.
 
 ### TODOs:
 4. Game over direct back to main menu
