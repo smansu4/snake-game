@@ -10,7 +10,7 @@ Additional features (not in the tutorial) have been added:
 - Restart feature allowing users to replay without exiting game window
 - Support for color-blind friendly color palette (toggleable in game)
 - Pause feature allowing players to stop game without losing progress 
-- Main menu screen
+- Main menu screen with options
 
 Resources: 
 - This project is based on the tutorial: https://www.youtube.com/watch?v=Y62MJny9LHg
@@ -20,9 +20,8 @@ Resources:
 
 ## How to play
 
-- Press 'Enter' to start, pause, and restart game
+- Press 'Enter' to pause, and restart game
 - Use the arrow keys on the keyboard to move snake
-- Press 'T' to change color theme 
 - To exit, close game window
 
 #### Single Player:
@@ -40,6 +39,13 @@ See gameplay notes below. When enabled, two users can play against each other.
 
 Game play notes:
 
-- There is a multi-player feature available in the gameplay. Feature is currently disabled in gameplay. To enable, update the `isMultiPlayer` flag in the `SnakeGame.java` file to `true`.
 - Player score is displayed on the top left (and right if multiplayer) hand corner of window
 - The color theme can be changed during game play 
+
+Development Notes: 
+TBD
+
+### TODOs:
+2. How to handle restart screen => use paint or JFrames?
+4. Game over direct back to main menu
+5. High score tracking

@@ -1,4 +1,4 @@
-package theme;
+package com.smansu4.theme;
 
 import java.awt.*;
 
@@ -9,6 +9,5 @@ public interface ColorPalette {
     Color getFoodColor();
     Color getTextColor();
     Color getScoreColor();
-
-    default Color getBackgroundColor() {return Color.BLACK;};
+    Color getBackgroundColor();
 }
