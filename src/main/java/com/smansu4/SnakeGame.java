@@ -17,11 +17,11 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
     private final int boardWidth;
     private final int boardHeight;
-    private int highScore = 0;
-    private Theme theme;
+    private int highScore;
+    private final Theme theme;
 
-    private Snake snake;
-    private Snake snake2;
+    private final Snake snake;
+    private final Snake snake2;
 
     private final Tile food;
     private final Random random;
@@ -29,7 +29,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     //game logic vars
     private Timer gameLoop;
 
-    private boolean multiplayerEnabled;
+    private final boolean multiplayerEnabled;
     private boolean gameOver = false;
     private boolean restart = false;
     private boolean pausedGame = false;
@@ -55,6 +55,9 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
         //100ms = 1/10 sec
         gameLoop = new Timer(100, this);
+    }
+
+    public void startGame() {
         gameLoop.start();
     }
 
@@ -84,18 +87,9 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         }
 
         // game over and pause screen
-        if(gameOver) {
-            checkForHighScore();
-            displayScreen(g, "Game Over!", "Press space to replay");
-
-            g.setColor(theme.getPalette().getTextColor());
-            g.setFont(new Font("Ariel", Font.PLAIN, 24));
-            g.drawString("High Score: " + highScore, 225, 280);
-
-        } else if(pausedGame) {
+        if(pausedGame) {
             displayScreen(g, "Paused Game", "Press space to unpause");
         }
-
         if(multiplayerEnabled) {
             g.setColor(theme.getPalette().getSecondarySnakeColor());
             g.setFont(new Font("Ariel", Font.PLAIN, 16));
@@ -214,11 +208,15 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
                 snake2.move();
             }
             checkGameRules();
-        } else if(restart) {
-            restartGameState();
         }
 
         repaint();
+
+        if(gameOver) {
+            gameLoop.stop();
+            checkForHighScore();
+            this.firePropertyChange(GameStateAction.GAME_OVER.toString(), false, true);
+        }
     }
 
     //Key Listener methods
@@ -229,7 +227,6 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
             multiplayerKeyPressed(e);
         }
 
-        //snake
         if(e.getKeyCode() == KeyEvent.VK_UP && snake.velocityY != 1) {
             snake.velocityX = 0;
             snake.velocityY = -1;
@@ -244,8 +241,6 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
             snake.velocityY = 0;
         } else if(!gameOver && e.getKeyCode() == KeyEvent.VK_SPACE) {
             pausedGame = !pausedGame;
-        } else if(gameOver && e.getKeyCode() == KeyEvent.VK_SPACE) {
-            restart = true;
         }
     }
 
@@ -265,6 +260,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         }
     }
 
+    //Move into a private class?
     private void readHighScore()  {
         try {
             File file = new File("src/main/resources/highScore.txt");
