@@ -1,6 +1,6 @@
 package com.smansu4.panels;
 
-import com.smansu4.panels.snake.SnakeGame;
+import com.smansu4.snake.SnakeGame;
 import com.smansu4.enums.GameStateAction;
 
 import javax.swing.*;

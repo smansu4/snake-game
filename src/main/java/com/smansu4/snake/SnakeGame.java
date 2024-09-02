@@ -1,4 +1,4 @@
-package com.smansu4.panels.snake;
+package com.smansu4.snake;
 
 import com.smansu4.enums.GameStateAction;
 import com.smansu4.theme.*;
