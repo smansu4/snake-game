@@ -59,5 +59,4 @@ Development Notes:
 
 
 ### TODOs:
-4. Game over direct back to main menu
-5. have a JPanel for game over and pause?
+5. have a JPanel game pause?
