@@ -28,7 +28,7 @@ public class OptionsPanel extends JPanel implements ActionListener {
         Insets inset_top_20 = new Insets(20, 0, 0, 0);
 
         JLabel optionsLabel = new JLabel(panelLabel);
-        optionsLabel.setFont(new Font("Serif", Font.PLAIN, 48));
+        optionsLabel.setFont(new Font("LucidaGrande", Font.PLAIN, 48));
         optionsLabel.setFont(optionsLabel.getFont().deriveFont(Font.BOLD));
 
         this.setLayout(new GridBagLayout());

@@ -64,9 +64,11 @@ public class Main {
                     break;
                 case "Multi Player":
                     gamePanel.setMultiplayer(true);
+                    gameOverPanel.setIsMultiPlayer(true);
                     break;
                 case "Single Player":
                     gamePanel.setMultiplayer(false);
+                    gameOverPanel.setIsMultiPlayer(false);
                     break;
                 case "Dark":
                     Theme.getInstance().setTheme(Theme.ThemeEnum.DARK_THEME);
@@ -91,14 +93,13 @@ public class Main {
             }if("p1Score".equals(evt.getPropertyName())) {
                 gameOverPanel.setP1Score((Integer) evt.getNewValue());
             }if("p2Score".equals(evt.getPropertyName())) {
-                System.out.println("Before the setter: " + evt.getNewValue());
-
-                gameOverPanel.serP2Score((Integer) evt.getNewValue());
+                gameOverPanel.setP2Score((Integer) evt.getNewValue());
             }
         });
 
         //Add a listener for game over panel state changes
-        //main menu not needed because the card shows the top card in deck so action not needed to change cards here.
+        //main menu not needed because the card shows the top
+        // card in deck so action not needed to change cards here
         gameOverPanel.addPropertyChangeListener(evt -> {
             System.out.println(evt.getPropertyName());
             if(GameStateAction.PLAY.toString().equals(evt.getPropertyName())) {

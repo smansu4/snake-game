@@ -2,7 +2,6 @@ package com.smansu4.panels;
 
 import com.smansu4.panels.snake.SnakeGame;
 import com.smansu4.enums.GameStateAction;
-import com.smansu4.theme.Theme;
 
 import javax.swing.*;
 import java.beans.PropertyChangeEvent;
