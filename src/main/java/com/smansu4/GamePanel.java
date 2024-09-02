@@ -35,6 +35,7 @@ public class GamePanel extends JPanel {
                     snakeGame.removeAll();
                     snakeGame.setVisible(false);
                     remove(snakeGame);
+                    setVisible(false);
                     firePropertyChange(GameStateAction.GAME_OVER.toString(), false, true);
                 }
             }

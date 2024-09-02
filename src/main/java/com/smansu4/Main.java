@@ -16,7 +16,6 @@ public class Main {
     CardLayout cardLayout;
     OptionsPanel optionsPanel;
     GamePanel gamePanel;
-    SnakeGame snakeGame;
     GameOverPanel gameOverPanel;
 
 
@@ -42,18 +41,15 @@ public class Main {
 
         optionsPanel = new OptionsPanel(windowWidth, windowHeight);
         gamePanel = new GamePanel(windowWidth, windowHeight, colorTheme, isMultiplayer);
-        //snakeGame = new SnakeGame(windowWidth, windowHeight, colorTheme, isMultiplayer);
         gameOverPanel = new GameOverPanel(windowWidth, windowHeight);
 
         //Add panels to the card panel
         cards.add(optionsPanel, Panels.OPTION.toString());
-        //cards.add(snakeGame, Panels.GAME.toString());
         cards.add(gamePanel, Panels.GAME.toString());
         cards.add(gameOverPanel, Panels.GAME_OVER.toString());
 
         //Add a listener for Options panel state changes
         optionsPanel.addPropertyChangeListener(evt -> {
-            System.out.println("in options panel listern: " + evt.getPropertyName());
             switch (evt.getPropertyName()) {
                 case "Play":
                     cardLayout.show(cards, Panels.GAME.toString());
@@ -73,28 +69,27 @@ public class Main {
                     break;
                 default:
                     System.out.println("Unknown property: " + evt.getPropertyName());
-
             }
         });
 
         //Add a listener for game panel state changes
         gamePanel.addPropertyChangeListener(evt -> {
-            System.out.println(" we are in the dame panel listener");
             if(GameStateAction.GAME_OVER.toString().equals(evt.getPropertyName())){
+                gameOverPanel.setFocusable(true);
+                gameOverPanel.requestFocusInWindow();
                 cardLayout.show(cards, Panels.GAME_OVER.toString());
             }
         });
 
 //        //Add a listener for game over panel state changes
-//        gameOverPanel.addPropertyChangeListener(evt -> {
-//            System.out.println(evt.getPropertyName());
-////            if(GameStateAction.REPLAY.toString().equals(evt.getPropertyName())){
-////                cardLayout.show(cards, Panels.GAME.toString());
-////            } else
-//                if(GameStateAction.GO_TO_MENU.toString().equals(evt.getPropertyName())) {
-//                //cardLayout.show(cards, Panels.OPTION.toString());
-//            }
-//        });
+        //main menu not needed because the card shows the top card in deck so action not needed to change cards here.
+        gameOverPanel.addPropertyChangeListener(evt -> {
+            System.out.println(evt.getPropertyName());
+            if(GameStateAction.PLAY.toString().equals(evt.getPropertyName())) {
+                cardLayout.show(cards, Panels.GAME.toString());
+                gamePanel.startGame();
+            }
+        });
     }
 
     public static void main(String[] args) {
