@@ -1,4 +1,4 @@
-package com.smansu4;
+package com.smansu4.panels.snake;
 
 import java.util.ArrayList;
 import java.util.List;

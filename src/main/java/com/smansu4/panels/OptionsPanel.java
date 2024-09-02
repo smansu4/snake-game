@@ -1,4 +1,4 @@
-package com.smansu4;
+package com.smansu4.panels;
 
 import javax.swing.*;
 import java.awt.*;

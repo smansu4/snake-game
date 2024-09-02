@@ -1,4 +1,4 @@
-package com.smansu4;
+package com.smansu4.panels.snake;
 
 public class Tile {
     public static final int SIZE = 25;

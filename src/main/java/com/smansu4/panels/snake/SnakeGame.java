@@ -1,5 +1,6 @@
-package com.smansu4;
+package com.smansu4.panels.snake;
 
+import com.smansu4.enums.GameStateAction;
 import com.smansu4.theme.*;
 
 import javax.swing.*;
@@ -34,10 +35,10 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     private boolean restart = false;
     private boolean pausedGame = false;
 
-    public SnakeGame(int boardWidth, int boardHeight, Theme theme, boolean isMultiplayer) {
+    public SnakeGame(int boardWidth, int boardHeight, boolean isMultiplayer) {
         this.boardWidth = boardWidth;
         this.boardHeight = boardHeight;
-        this.theme = theme;
+        this.theme = Theme.getInstance();
         this.multiplayerEnabled = isMultiplayer;
         readHighScore();
 
@@ -215,6 +216,11 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         if(gameOver) {
             gameLoop.stop();
             checkForHighScore();
+            this.firePropertyChange("highScore", -1, highScore);
+            this.firePropertyChange("p1Score", -1, snake.body.size());
+            if(multiplayerEnabled) {
+                this.firePropertyChange("p2Score", -1, snake2.body.size());
+            }
             this.firePropertyChange(GameStateAction.GAME_OVER.toString(), false, true);
         }
     }

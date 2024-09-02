@@ -1,5 +1,10 @@
 package com.smansu4;
 
+import com.smansu4.enums.GameStateAction;
+import com.smansu4.enums.Panels;
+import com.smansu4.panels.GameOverPanel;
+import com.smansu4.panels.GamePanel;
+import com.smansu4.panels.OptionsPanel;
 import com.smansu4.theme.Theme;
 
 import javax.swing.*;
@@ -9,8 +14,6 @@ public class Main {
     private JFrame frame;
     private final int windowWidth = 600;
     private final int windowHeight = 600;
-    private final Theme colorTheme = Theme.getInstance();
-    private boolean isMultiplayer = false;
 
     JPanel cards;
     CardLayout cardLayout;
@@ -18,6 +21,10 @@ public class Main {
     GamePanel gamePanel;
     GameOverPanel gameOverPanel;
 
+    //TODO:
+    // 2. fix screen
+    // 3. fix game over layout
+    // 4. Show winner score
 
     public Main() {
         initialize();
@@ -40,7 +47,7 @@ public class Main {
         frame.add(cards);
 
         optionsPanel = new OptionsPanel(windowWidth, windowHeight);
-        gamePanel = new GamePanel(windowWidth, windowHeight, colorTheme, isMultiplayer);
+        gamePanel = new GamePanel(windowWidth, windowHeight);
         gameOverPanel = new GameOverPanel(windowWidth, windowHeight);
 
         //Add panels to the card panel
@@ -56,16 +63,16 @@ public class Main {
                     gamePanel.startGame();
                     break;
                 case "Multi Player":
-                    isMultiplayer = true;
+                    gamePanel.setMultiplayer(true);
                     break;
                 case "Single Player":
-                    isMultiplayer = false;
+                    gamePanel.setMultiplayer(false);
                     break;
                 case "Dark":
-                    colorTheme.setTheme(Theme.ThemeEnum.DARK_THEME);
+                    Theme.getInstance().setTheme(Theme.ThemeEnum.DARK_THEME);
                     break;
                 case "Light":
-                    colorTheme.setTheme(Theme.ThemeEnum.LIGHT_THEME);
+                    Theme.getInstance().setTheme(Theme.ThemeEnum.LIGHT_THEME);
                     break;
                 default:
                     System.out.println("Unknown property: " + evt.getPropertyName());
@@ -77,11 +84,20 @@ public class Main {
             if(GameStateAction.GAME_OVER.toString().equals(evt.getPropertyName())){
                 gameOverPanel.setFocusable(true);
                 gameOverPanel.requestFocusInWindow();
+                gameOverPanel.initialize();
                 cardLayout.show(cards, Panels.GAME_OVER.toString());
+            } if("highScore".equals(evt.getPropertyName())) {
+                gameOverPanel.setHighScore((Integer) evt.getNewValue());
+            }if("p1Score".equals(evt.getPropertyName())) {
+                gameOverPanel.setP1Score((Integer) evt.getNewValue());
+            }if("p2Score".equals(evt.getPropertyName())) {
+                System.out.println("Before the setter: " + evt.getNewValue());
+
+                gameOverPanel.serP2Score((Integer) evt.getNewValue());
             }
         });
 
-//        //Add a listener for game over panel state changes
+        //Add a listener for game over panel state changes
         //main menu not needed because the card shows the top card in deck so action not needed to change cards here.
         gameOverPanel.addPropertyChangeListener(evt -> {
             System.out.println(evt.getPropertyName());

@@ -1,4 +1,6 @@
-package com.smansu4;
+package com.smansu4.panels;
+
+import com.smansu4.enums.GameStateAction;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,17 +13,21 @@ public class GameOverPanel extends JPanel implements ActionListener, KeyListener
     private String mainMenuBtnText = "Main Menu";
 
     JLabel gameOverLabel = new JLabel("Game Over");
-    JLabel highScoreLabel = new JLabel("High Score: ");
+    JLabel highScoreLabel = new JLabel();
+    JLabel player1Score = new JLabel();
+    JLabel player2Score = new JLabel();
     JLabel replayLabel = new JLabel("Press space bar to replay");
     JButton mainMenuButton = new JButton(mainMenuBtnText);
 
+    int highScore = 0;
+    int p1Score = 0;
+    int p2Score = -1;
+
     public GameOverPanel(int windowWidth, int windowHeight) {
         this.setSize(windowWidth, windowHeight);
-
-        initializePanel();
     }
 
-    public void initializePanel() {
+    public void initialize() {
         this.setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = 0;
@@ -30,15 +36,37 @@ public class GameOverPanel extends JPanel implements ActionListener, KeyListener
         this.add(gameOverLabel, constraints);
 
         constraints.gridy = 1;
+        highScoreLabel.setText("High Score: " + highScore);
         this.add(highScoreLabel, constraints);
 
         constraints.gridy = 2;
+        player1Score.setText("Player 1 Score: " + p1Score);
+        this.add(player1Score, constraints);
 
+        if(p2Score != -1) {
+            constraints.gridy = 3;
+            player2Score.setText("Player 2 Score: " + p2Score);
+            this.add(player2Score, constraints);
+        };
+
+        constraints.gridy = 4;
         this.add(replayLabel, constraints);
 
-        constraints.gridy = 3;
+        constraints.gridy = 5;
         mainMenuButton.addActionListener(this);
         this.add(mainMenuButton, constraints);
+    }
+
+    public void setHighScore(int highScore) {
+        this.highScore = highScore;
+    }
+
+    public void setP1Score(int score) {
+        this.p1Score = score;
+    }
+
+    public void serP2Score(int score) {
+        this.p2Score = score;
     }
 
     @Override
