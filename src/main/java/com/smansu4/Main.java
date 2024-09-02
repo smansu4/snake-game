@@ -101,7 +101,6 @@ public class Main {
         //main menu not needed because the card shows the top
         // card in deck so action not needed to change cards here
         gameOverPanel.addPropertyChangeListener(evt -> {
-            System.out.println(evt.getPropertyName());
             if(GameStateAction.PLAY.toString().equals(evt.getPropertyName())) {
                 cardLayout.show(cards, Panels.GAME.toString());
                 gamePanel.startGame();
