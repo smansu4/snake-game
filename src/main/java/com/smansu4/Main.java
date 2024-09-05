@@ -13,18 +13,13 @@ import java.awt.*;
 public class Main {
     private JFrame frame;
     private final int windowWidth = 600;
-    private final int windowHeight = 600;
+    private final int windowHeight = 628;
 
     JPanel cards;
     CardLayout cardLayout;
     OptionsPanel optionsPanel;
     GamePanel gamePanel;
     GameOverPanel gameOverPanel;
-
-    //TODO:
-    // 2. fix screen
-    // 3. fix game over layout
-    // 4. Show winner score
 
     public Main() {
         initialize();
@@ -34,6 +29,8 @@ public class Main {
         frame = new JFrame("Snake Game");
         frame.setVisible(true);
         frame.setSize(windowWidth, windowHeight);
+        frame.setPreferredSize(new Dimension(windowWidth, windowHeight));
+        frame.setMinimumSize(new Dimension(windowWidth, windowHeight));
         frame.setLocationRelativeTo(null);          //open window in middle of screen
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,13 +44,15 @@ public class Main {
         frame.add(cards);
 
         optionsPanel = new OptionsPanel(windowWidth, windowHeight);
-        gamePanel = new GamePanel(windowWidth, windowHeight);
+        gamePanel = new GamePanel();
         gameOverPanel = new GameOverPanel(windowWidth, windowHeight);
 
         //Add panels to the card panel
         cards.add(optionsPanel, Panels.OPTION.toString());
         cards.add(gamePanel, Panels.GAME.toString());
         cards.add(gameOverPanel, Panels.GAME_OVER.toString());
+
+        frame.pack();
 
         //Add a listener for Options panel state changes
         optionsPanel.addPropertyChangeListener(evt -> {
