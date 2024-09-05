@@ -36,7 +36,7 @@ public class GamePanel extends JPanel {
                 firePropertyChange("highScore", -1, evt.getNewValue());
             } else if ("p1Score".equals(evt.getPropertyName())){
                 firePropertyChange("p1Score", -1, evt.getNewValue());
-            }else if ("p2Score".equals(evt.getPropertyName())){
+            } else if ("p2Score".equals(evt.getPropertyName())){
                 firePropertyChange("p2Score", -1, evt.getNewValue());
             }
         });

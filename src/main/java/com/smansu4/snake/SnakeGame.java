@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 
 public class SnakeGame extends JPanel implements ActionListener, KeyListener {
-
+    private final HighScoreReader highScoreReader;
     private final int boardWidth;
     private final int boardHeight;
     private int highScore;
@@ -40,7 +40,8 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         this.boardHeight = boardHeight;
         this.theme = Theme.getInstance();
         this.multiplayerEnabled = isMultiplayer;
-        readHighScore();
+        highScoreReader = new HighScoreReader();
+        highScoreReader.readHighScore();
 
         setPreferredSize(new Dimension(this.boardWidth, this.boardHeight));
         setBackground(theme.getPalette().getBackgroundColor());
@@ -127,7 +128,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     public void checkForHighScore() {
         if(snake.body.size() > highScore || snake2.body.size() > highScore) {
             highScore = Math.max(snake.body.size(), snake2.body.size());
-            updateHighScore(highScore);
+            highScoreReader.updateHighScore(highScore);
         }
     }
 
@@ -266,26 +267,29 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         }
     }
 
-    //Move into a private class?
-    private void readHighScore()  {
-        try {
-            File file = new File("src/main/resources/highScore.txt");
-            Scanner scanner = new Scanner(file);
-            highScore = scanner.nextInt();
-            scanner.close();
-        } catch (IOException e) {
-            System.out.println("Error reading highScore.txt");
-            highScore = 0;
-        }
-    }
+    private class HighScoreReader {
+        private final String FILE_PATH = "src/main/resources/highScore.txt";
 
-    private void updateHighScore(int currentScore) {
-        try {
-            FileWriter writer = new FileWriter("src/main/resources/highScore.txt");
-            writer.write(String.valueOf(currentScore));
-            writer.close();
-        } catch(IOException e) {
-            System.out.println("highScore.txt not found");
+        private void readHighScore()  {
+            try {
+                File file = new File(FILE_PATH);
+                Scanner scanner = new Scanner(file);
+                highScore = scanner.nextInt();
+                scanner.close();
+            } catch (IOException e) {
+                System.out.println("Error reading highScore.txt");
+                highScore = 0;
+            }
+        }
+
+        private void updateHighScore(int currentScore) {
+            try {
+                FileWriter writer = new FileWriter(FILE_PATH);
+                writer.write(String.valueOf(currentScore));
+                writer.close();
+            } catch(IOException e) {
+                System.out.println("highScore.txt not found");
+            }
         }
     }
 

@@ -10,18 +10,18 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class GameOverPanel extends JPanel implements ActionListener, KeyListener {
-    private String mainMenuBtnText = "Main Menu";
-    JLabel gameOverLabel = new JLabel("Game Over");
-    JLabel replayLabel = new JLabel("Press space bar to replay");
-    JLabel highScoreLabel = new JLabel();
-    JLabel player1Score = new JLabel();
-    JLabel player2Score = new JLabel();
-    JButton mainMenuButton = new JButton(mainMenuBtnText);
+    private final String mainMenuBtnText = "Main Menu";
+    private final JButton mainMenuButton = new JButton(mainMenuBtnText);
+    private final JLabel gameOverLabel = new JLabel("Game Over");
+    private final JLabel replayLabel = new JLabel("Press space bar to replay");
+    private final JLabel highScoreLabel = new JLabel();
+    private final JLabel player1Score = new JLabel();
+    private final JLabel player2Score = new JLabel();
 
-    boolean isMultiPlayer = false;
-    int highScore = 0;
-    int p1Score = 0;
-    int p2Score = 0;
+    private boolean isMultiPlayer = false;
+    private int highScore = 0;
+    private int p1Score = 0;
+    private int p2Score = 0;
 
     public GameOverPanel(int windowWidth, int windowHeight) {
         this.setSize(windowWidth, windowHeight);
@@ -41,23 +41,24 @@ public class GameOverPanel extends JPanel implements ActionListener, KeyListener
         constraints.insets = inset_top_10;
         constraints.gridy = 1;
         highScoreLabel.setText("Current High Score: " + highScore);
-        highScoreLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+        String TEXT_FONT = "Lucida Grande";
+        highScoreLabel.setFont(new Font(TEXT_FONT, Font.PLAIN, 18));
         this.add(highScoreLabel, constraints);
 
         if(isMultiPlayer) {
             constraints.gridy = 2;
             player1Score.setText("Right Player Score: " + p1Score);
-            player1Score.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+            player1Score.setFont(new Font(TEXT_FONT, Font.PLAIN, 18));
             this.add(player1Score, constraints);
 
             constraints.gridy = 3;
             player2Score.setText("Left Player Score: " + p2Score);
-            player2Score.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+            player2Score.setFont(new Font(TEXT_FONT, Font.PLAIN, 18));
             this.add(player2Score, constraints);
         } else {
             constraints.gridy = 2;
             player1Score.setText("Your Score: " + p1Score);
-            player1Score.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+            player1Score.setFont(new Font(TEXT_FONT, Font.PLAIN, 18));
             this.add(player1Score, constraints);
         }
 
