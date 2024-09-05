@@ -215,12 +215,14 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         repaint();
 
         if(gameOver) {
+            int defaultOldValue = -1;
+
             gameLoop.stop();
             checkForHighScore();
-            this.firePropertyChange("highScore", -1, highScore);
-            this.firePropertyChange("p1Score", -1, snake.body.size());
+            this.firePropertyChange("highScore", defaultOldValue, highScore);
+            this.firePropertyChange("p1Score", defaultOldValue, snake.body.size());
             if(multiplayerEnabled) {
-                this.firePropertyChange("p2Score", -1, snake2.body.size());
+                this.firePropertyChange("p2Score", defaultOldValue, snake2.body.size());
             }
             this.firePropertyChange(GameStateAction.GAME_OVER.toString(), false, true);
         }

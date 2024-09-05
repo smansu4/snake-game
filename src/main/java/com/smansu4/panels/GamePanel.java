@@ -26,6 +26,7 @@ public class GamePanel extends JPanel {
         snakeGame.requestFocus();
 
         snakeGame.addPropertyChangeListener(evt -> {
+            int defaultOldValue = -1;
             if(GameStateAction.GAME_OVER.toString().equals(evt.getPropertyName())){
                 snakeGame.removeAll();
                 snakeGame.setVisible(false);
@@ -33,11 +34,11 @@ public class GamePanel extends JPanel {
                 setVisible(false);
                 firePropertyChange(GameStateAction.GAME_OVER.toString(), false, true);
             } else if ("highScore".equals(evt.getPropertyName())){
-                firePropertyChange("highScore", -1, evt.getNewValue());
+                firePropertyChange("highScore", defaultOldValue, evt.getNewValue());
             } else if ("p1Score".equals(evt.getPropertyName())){
-                firePropertyChange("p1Score", -1, evt.getNewValue());
+                firePropertyChange("p1Score", defaultOldValue, evt.getNewValue());
             } else if ("p2Score".equals(evt.getPropertyName())){
-                firePropertyChange("p2Score", -1, evt.getNewValue());
+                firePropertyChange("p2Score", defaultOldValue, evt.getNewValue());
             }
         });
         snakeGame.startGame();
