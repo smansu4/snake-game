@@ -1,28 +1,25 @@
 package com.smansu4;
 
+import com.smansu4.enums.GameStateAction;
+import com.smansu4.enums.Panels;
+import com.smansu4.panels.GameOverPanel;
+import com.smansu4.panels.GamePanel;
+import com.smansu4.panels.OptionsPanel;
 import com.smansu4.theme.Theme;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class Main implements ActionListener {
-
+public class Main {
     private JFrame frame;
-    private int windowWidth = 600;
-    private int windowHeight = windowWidth;
-    private Theme colorTheme = Theme.getInstance();
-    private boolean isMultiplayer = false;
+    private final int windowWidth = 600;
+    private final int windowHeight = 628;
 
-    JRadioButton darkThemeRadioBtn = new JRadioButton("Dark");
-    JRadioButton lightThemeRadioBtn = new JRadioButton("Light");
-
-    JRadioButton singlePlayerRadioBtn = new JRadioButton("Single Player");
-    JRadioButton multiPlayerRadioBtn = new JRadioButton("Multi Player");
-
-    JPanel optionsMenuPanel = setUpOptionsMenu();
-
+    JPanel cards;
+    CardLayout cardLayout;
+    OptionsPanel optionsPanel;
+    GamePanel gamePanel;
+    GameOverPanel gameOverPanel;
 
     public Main() {
         initialize();
@@ -32,125 +29,82 @@ public class Main implements ActionListener {
         frame = new JFrame("Snake Game");
         frame.setVisible(true);
         frame.setSize(windowWidth, windowHeight);
+        frame.setPreferredSize(new Dimension(windowWidth, windowHeight));
+        frame.setMinimumSize(new Dimension(windowWidth, windowHeight));
         frame.setLocationRelativeTo(null);          //open window in middle of screen
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(optionsMenuPanel);
+
+        cardSetUp();
     }
 
-    public void startGame() {
-        SnakeGame snakeGame = new SnakeGame(windowWidth, windowHeight, colorTheme, isMultiplayer);
-        frame.add(snakeGame);
+    public void cardSetUp() {
+        cardLayout = new CardLayout();
+        cards = new JPanel(cardLayout);
+        frame.add(cards);
+
+        optionsPanel = new OptionsPanel(windowWidth, windowHeight);
+        gamePanel = new GamePanel();
+        gameOverPanel = new GameOverPanel(windowWidth, windowHeight);
+
+        //Add panels to the card panel
+        cards.add(optionsPanel, Panels.OPTION.toString());
+        cards.add(gamePanel, Panels.GAME.toString());
+        cards.add(gameOverPanel, Panels.GAME_OVER.toString());
+
         frame.pack();
-        snakeGame.requestFocus();
-    }
 
-    public JPanel setUpOptionsMenu() {
-        JPanel optionsMenuPanel = new JPanel();
+        //Add a listener for Options panel state changes
+        optionsPanel.addPropertyChangeListener(evt -> {
+            switch (evt.getPropertyName()) {
+                case "Play":
+                    cardLayout.show(cards, Panels.GAME.toString());
+                    gamePanel.startGame();
+                    break;
+                case "Multi Player":
+                    gamePanel.setMultiplayer(true);
+                    gameOverPanel.setIsMultiPlayer(true);
+                    break;
+                case "Single Player":
+                    gamePanel.setMultiplayer(false);
+                    gameOverPanel.setIsMultiPlayer(false);
+                    break;
+                case "Dark":
+                    Theme.getInstance().setTheme(Theme.ThemeEnum.DARK_THEME);
+                    break;
+                case "Light":
+                    Theme.getInstance().setTheme(Theme.ThemeEnum.LIGHT_THEME);
+                    break;
+                default:
+                    System.out.println("Unknown property: " + evt.getPropertyName());
+            }
+        });
 
-        Insets inset_top_0 = new Insets(0, 0, 0, 0);
-        Insets inset_top_20 = new Insets(20, 0, 0, 0);
+        //Add a listener for game panel state changes
+        gamePanel.addPropertyChangeListener(evt -> {
+            if(GameStateAction.GAME_OVER.toString().equals(evt.getPropertyName())){
+                gameOverPanel.setFocusable(true);
+                gameOverPanel.requestFocusInWindow();
+                gameOverPanel.initialize();
+                cardLayout.show(cards, Panels.GAME_OVER.toString());
+            } if("highScore".equals(evt.getPropertyName())) {
+                gameOverPanel.setHighScore((Integer) evt.getNewValue());
+            }if("p1Score".equals(evt.getPropertyName())) {
+                gameOverPanel.setP1Score((Integer) evt.getNewValue());
+            }if("p2Score".equals(evt.getPropertyName())) {
+                gameOverPanel.setP2Score((Integer) evt.getNewValue());
+            }
+        });
 
-        JLabel optionsLabel = new JLabel("Snake Game");
-        optionsLabel.setFont(new Font("Serif", Font.PLAIN, 48));
-        optionsLabel.setFont(optionsLabel.getFont().deriveFont(Font.BOLD));
-
-        optionsMenuPanel.setLayout(new GridBagLayout());
-        GridBagConstraints optionsPanelLayoutConstraint = new GridBagConstraints();
-
-        optionsPanelLayoutConstraint.insets = inset_top_0;
-        optionsPanelLayoutConstraint.fill = GridBagConstraints.HORIZONTAL;
-        optionsPanelLayoutConstraint.gridx = 0;
-        optionsPanelLayoutConstraint.gridy = 0;
-        optionsMenuPanel.add(optionsLabel, optionsPanelLayoutConstraint);
-
-
-        //Color Theme Layout
-        JLabel themeSelectionLabel = new JLabel("Select a Color Theme: ");
-
-        optionsPanelLayoutConstraint.insets = inset_top_20;
-        optionsPanelLayoutConstraint.gridy = 1;
-        optionsMenuPanel.add(themeSelectionLabel, optionsPanelLayoutConstraint);
-
-
-        optionsPanelLayoutConstraint.insets = inset_top_0;
-        optionsPanelLayoutConstraint.gridy = 2;
-
-        darkThemeRadioBtn.setSelected(true);
-        darkThemeRadioBtn.addActionListener(this);
-        optionsMenuPanel.add(darkThemeRadioBtn,optionsPanelLayoutConstraint);
-
-        optionsPanelLayoutConstraint.insets = inset_top_0;
-        optionsPanelLayoutConstraint.gridy = 3;
-        lightThemeRadioBtn.addActionListener(this);
-        optionsMenuPanel.add(lightThemeRadioBtn, optionsPanelLayoutConstraint);
-
-
-        //Game Mode Layout
-        JLabel gameModeLabel = new JLabel("Select a Game Mode: ");
-
-        optionsPanelLayoutConstraint.insets = inset_top_20;
-        optionsPanelLayoutConstraint.gridy = 4;
-        optionsMenuPanel.add(gameModeLabel, optionsPanelLayoutConstraint);
-
-
-        optionsPanelLayoutConstraint.insets = inset_top_0;
-        optionsPanelLayoutConstraint.gridy = 5;
-        singlePlayerRadioBtn.setSelected(true);
-        singlePlayerRadioBtn.addActionListener(this);
-        optionsMenuPanel.add(singlePlayerRadioBtn, optionsPanelLayoutConstraint);
-
-        optionsPanelLayoutConstraint.gridy = 6;
-        multiPlayerRadioBtn.addActionListener(this);
-        optionsMenuPanel.add(multiPlayerRadioBtn, optionsPanelLayoutConstraint);
-
-
-        //Back Button Layout
-        JButton playButton = new JButton("Play");
-
-        optionsPanelLayoutConstraint.insets = inset_top_20;
-        optionsPanelLayoutConstraint.anchor = GridBagConstraints.PAGE_END; //bottom of space
-        optionsPanelLayoutConstraint.gridx = 0;
-        optionsPanelLayoutConstraint.gridy = 7;
-
-        optionsMenuPanel.add(playButton, optionsPanelLayoutConstraint);
-        playButton.addActionListener(this);
-
-        return optionsMenuPanel;
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        switch (e.getActionCommand()) {
-            case "Dark":
-                darkThemeRadioBtn.setSelected(true);
-                lightThemeRadioBtn.setSelected(false);
-                colorTheme.useClassicTheme(true);
-                break;
-            case "Light":
-                darkThemeRadioBtn.setSelected(false);
-                lightThemeRadioBtn.setSelected(true);
-                colorTheme.useClassicTheme(false);
-                break;
-            case "Single Player":
-                singlePlayerRadioBtn.setSelected(true);
-                multiPlayerRadioBtn.setSelected(false);
-                isMultiplayer = false;
-                break;
-            case "Multi Player":
-                singlePlayerRadioBtn.setSelected(false);
-                multiPlayerRadioBtn.setSelected(true);
-                isMultiplayer = true;
-                break;
-            case "Play":
-                frame.remove(optionsMenuPanel);
-                optionsMenuPanel.removeAll();
-                optionsMenuPanel.setVisible(false);
-                startGame();
-                break;
-            default:
-                System.out.println("User selected unimplemented action" + e.getActionCommand());
-        }
+        //Add a listener for game over panel state changes
+        //main menu not needed because the card shows the top
+        // card in deck so action not needed to change cards here
+        gameOverPanel.addPropertyChangeListener(evt -> {
+            if(GameStateAction.PLAY.toString().equals(evt.getPropertyName())) {
+                cardLayout.show(cards, Panels.GAME.toString());
+                gamePanel.startGame();
+            }
+        });
     }
 
     public static void main(String[] args) {

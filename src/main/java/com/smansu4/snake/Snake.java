@@ -1,4 +1,4 @@
-package com.smansu4;
+package com.smansu4.snake;
 
 import java.util.ArrayList;
 import java.util.List;

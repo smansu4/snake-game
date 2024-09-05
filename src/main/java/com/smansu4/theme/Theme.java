@@ -5,36 +5,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Theme {
+    public enum ThemeEnum {
+        LIGHT_THEME,
+        DARK_THEME
+    }
 
     private static Theme theme;
-
-    private final List<ColorPalette> themesList;
-    private boolean useDefaultTheme = true;
+    private final ColorPalette light;
+    private final ColorPalette dark;
+    private ThemeEnum selection;
 
     private Theme() {
-        themesList = new ArrayList<>();
-        themesList.add(new Dark());
-        themesList.add(new Light());
+        this.light = new Light();
+        this.dark = new Dark();
+        selection = ThemeEnum.DARK_THEME;
     }
 
     public static Theme getInstance() {
-        if(theme == null) {
-            theme = new Theme();
-        }
+        if(theme == null) theme = new Theme();
 
         return theme;
     }
 
-    public ColorPalette useClassicTheme(boolean darkSelected) {
-        useDefaultTheme = darkSelected;
-        return darkSelected ? themesList.get(0) : themesList.get(1);
+    public void setTheme(ThemeEnum themeEnum) {
+        selection = themeEnum;
     }
 
     public ColorPalette getPalette() {
-        if(useDefaultTheme){
-            return themesList.get(0);
-        }
-        return themesList.get(1);
+        if(selection == ThemeEnum.DARK_THEME) return dark;
+
+        return light;
     }
 
     private static final class Dark implements ColorPalette {
