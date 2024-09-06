@@ -97,7 +97,6 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
             g.setFont(new Font("Ariel", Font.PLAIN, 16));
             g.drawString("Score: " + snake2.body.size(), Tile.SIZE - 16, Tile.SIZE);
 
-
             g.setColor(theme.getPalette().getSnakeColor());
             g.setFont(new Font("Ariel", Font.PLAIN, 16));
             g.drawString("Score: " + snake.body.size(), Tile.SIZE * 19, Tile.SIZE);
@@ -197,7 +196,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
         g.setColor(theme.getPalette().getTextColor());
         g.setFont(new Font("Ariel", Font.PLAIN, 24));
-        g.drawString(subtitle, 185, 330);
+        g.drawString(subtitle, 175, 330);
     }
 
     @Override
