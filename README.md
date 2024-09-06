@@ -44,13 +44,12 @@ Game play notes:
 - Player score is displayed on the top left hand (and right if multiplayer) corner of window
 
 Development Notes: 
-- Changed the painted options menu to a JPanel with UI components for cleaner look. The buttons allowed the user to more easily select game settings vs having to read instructions in small text and toggle keys.
+- Replaced the painted options menu to a JPanel with UI components for cleaner look. The buttons allow the user to more easily select game settings vs having to read instructions in small text and toggle keys.
 - Decided not to toggle color of main menu as swing does not allow user to change button color easily. The background setting changes the screen color behind the button. Updating opacity replaced the button look and feel with a rectangular box. The original silver buttons did not look good against the dark theme black background.
 - The color-blind friendly theme was changed into a light mode. There wasn't a nice way to preview the color changes in the menu for the user without having to recreate the JPanel (to pick up new theme with each key press). Both options would have displayed a black game background with seemingly little difference in colors. Renaming the two themes as light and dark and set background accordingly was more intuitive for users.
   - The game text/snake/food in light mode uses color-blind friendly colors against the lighter background.
-- Made the design choice to make the `Theme` class a singleton. This was because originally the theme was changed via toggling the `T` key. I didn't want to instantiate new instances of the themes each key press while user was deciding. The singleton pattern was used to ensure only once instance of each theme would exist.
-  - Now there is a menu for theme selection and user does not see the UI change in real time with the selection. The implementation of the theme can be changed to only instantiate when the user clicks play. The `Theme.java` file can be completely removed after moving the inner classes to their own file. The `ColorPalette` interface can be used to reference the selected color theme.
-
+- Made the design choice to make the `Theme` class a singleton. Originally the theme was changed via toggling the `T` key. I didn't want to instantiate new instances of the themes each key press while user was deciding on a selection. The singleton pattern was used to ensure only once instance of each color palette would exist.
+  - There is now a menu for theme selection and user does not see the UI change in real time with the selection as with the previous drawn menu. For the future, the theme logic can be changed to only instantiate a palette when the user clicks play. The `Theme.java` file can then be completely removed after moving the inner classes to their own file.
 
 ### Images: 
 ![Screenshot of game menu](src/main/resources/imgs/optionsMenu.png?raw=true "Option Menu seen upon app start up")
@@ -59,4 +58,12 @@ Development Notes:
 
 
 ### TODOs:
-5. have a JPanel game pause?
+5. Resolve the below issue. Memory leak issue with listeners in `SnakeGame.java`. The menu screen doesn't show the error when running for long periods of time. Thinking it's the game loop causing this?
+````
+CodeCache: size=131072Kb used=4129Kb max_used=4131Kb free=126943Kb
+ bounds [0x0000000102bfc000, 0x000000010300c000, 0x000000010abfc000]
+ total_blobs=1784 nmethods=1255 adapters=446
+ compilation: disabled (not enough contiguous free space left)
+OpenJDK 64-Bit Server VM warning: CodeCache is full. Compiler has been disabled.
+OpenJDK 64-Bit Server VM warning: Try increasing the code cache size using -XX:ReservedCodeCacheSize=
+````
