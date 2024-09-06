@@ -7,7 +7,6 @@ based on a tutorial linked in the resources section below.
 
 Additional features (not in the tutorial) have been added:  
 
-- Restart feature allowing users to replay without exiting game window
 - Support for color-blind friendly color palette (toggleable in game)
 - Pause feature allowing players to stop game without losing progress 
 - Multiplayer option for competitive players
@@ -58,6 +57,7 @@ Development Notes:
 
 
 ### TODOs:
+4. Reimplement the restart feature. feature was removed with the inclusion of JPanel menus. The KeyPress events were not being detected from the GameOver panel to restart the game. 
 5. Resolve the below issue. Memory leak issue with listeners in `SnakeGame.java`. The menu screen doesn't show the error when running for long periods of time. Thinking it's the game loop causing this?
 ````
 CodeCache: size=131072Kb used=4129Kb max_used=4131Kb free=126943Kb

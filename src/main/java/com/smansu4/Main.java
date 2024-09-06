@@ -10,16 +10,18 @@ import com.smansu4.theme.Theme;
 import javax.swing.*;
 import java.awt.*;
 
+import static com.smansu4.panels.ScoreEnums.*;
+
 public class Main {
     private JFrame frame;
     private final int windowWidth = 600;
     private final int windowHeight = 628;
 
-    JPanel cards;
-    CardLayout cardLayout;
-    OptionsPanel optionsPanel;
-    GamePanel gamePanel;
-    GameOverPanel gameOverPanel;
+    private JPanel cards;
+    private CardLayout cardLayout;
+    private OptionsPanel optionsPanel;
+    private GamePanel gamePanel;
+    private GameOverPanel gameOverPanel;
 
     public Main() {
         initialize();
@@ -83,15 +85,13 @@ public class Main {
         //Add a listener for game panel state changes
         gamePanel.addPropertyChangeListener(evt -> {
             if(GameStateAction.GAME_OVER.toString().equals(evt.getPropertyName())){
-                gameOverPanel.setFocusable(true);
-                gameOverPanel.requestFocusInWindow();
                 gameOverPanel.initialize();
                 cardLayout.show(cards, Panels.GAME_OVER.toString());
-            } if("highScore".equals(evt.getPropertyName())) {
+            } if(HIGH_SCORE.toString().equals(evt.getPropertyName())) {
                 gameOverPanel.setHighScore((Integer) evt.getNewValue());
-            }if("p1Score".equals(evt.getPropertyName())) {
+            } if(P1_SCORE.toString().equals(evt.getPropertyName())) {
                 gameOverPanel.setP1Score((Integer) evt.getNewValue());
-            }if("p2Score".equals(evt.getPropertyName())) {
+            } if(P2_SCORE.toString().equals(evt.getPropertyName())) {
                 gameOverPanel.setP2Score((Integer) evt.getNewValue());
             }
         });
