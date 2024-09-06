@@ -12,6 +12,7 @@ Additional features (not in the tutorial) have been added:
 - Multiplayer option for competitive players
 - Main menu screen with game options
 - High score with persistence between game launches
+- Game over menu 
 
 Resources: 
 - This project is based on the tutorial: https://www.youtube.com/watch?v=Y62MJny9LHg
@@ -49,6 +50,7 @@ Development Notes:
   - The game text/snake/food in light mode uses color-blind friendly colors against the lighter background.
 - Made the design choice to make the `Theme` class a singleton. Originally the theme was changed via toggling the `T` key. I didn't want to instantiate new instances of the themes each key press while user was deciding on a selection. The singleton pattern was used to ensure only once instance of each color palette would exist.
   - There is now a menu for theme selection and user does not see the UI change in real time with the selection as with the previous drawn menu. For the future, the theme logic can be changed to only instantiate a palette when the user clicks play. The `Theme.java` file can then be completely removed after moving the inner classes to their own file.
+- Can also consider using redis to read/write high scores instead of using file. Currently, using file for simplicity.
 
 ### Images: 
 ![Screenshot of game menu](src/main/resources/imgs/optionsMenu.png?raw=true "Option Menu seen upon app start up")
