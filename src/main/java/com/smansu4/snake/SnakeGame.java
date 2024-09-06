@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
 
+import static com.smansu4.panels.ScoreEnums.*;
+
 
 public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     private final HighScoreReader highScoreReader;
@@ -218,10 +220,10 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
             gameLoop.stop();
             checkForHighScore();
-            this.firePropertyChange("highScore", defaultOldValue, highScore);
-            this.firePropertyChange("p1Score", defaultOldValue, snake.body.size());
+            this.firePropertyChange(HIGH_SCORE.toString(), defaultOldValue, highScore);
+            this.firePropertyChange(P1_SCORE.toString(), defaultOldValue, snake.body.size());
             if(multiplayerEnabled) {
-                this.firePropertyChange("p2Score", defaultOldValue, snake2.body.size());
+                this.firePropertyChange(P2_SCORE.toString(), defaultOldValue, snake2.body.size());
             }
             this.firePropertyChange(GameStateAction.GAME_OVER.toString(), false, true);
         }

@@ -6,10 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
-public class GameOverPanel extends JPanel implements ActionListener, KeyListener {
+public class GameOverPanel extends JPanel implements ActionListener {
     private final String mainMenuBtnText = "Main Menu";
     private final JButton mainMenuButton = new JButton(mainMenuBtnText);
     private final JLabel gameOverLabel = new JLabel("Game Over");
@@ -25,6 +23,8 @@ public class GameOverPanel extends JPanel implements ActionListener, KeyListener
 
     public GameOverPanel(int windowWidth, int windowHeight) {
         this.setSize(windowWidth, windowHeight);
+        setFocusable(true);
+        requestFocusInWindow();
     }
 
     public void initialize() {
@@ -63,10 +63,13 @@ public class GameOverPanel extends JPanel implements ActionListener, KeyListener
         }
 
         constraints.insets = inset_top_20;
-
         constraints.gridy = 5;
         mainMenuButton.addActionListener(this);
         this.add(mainMenuButton, constraints);
+    }
+
+    public void setIsMultiPlayer(boolean isMultiPlayer) {
+        this.isMultiPlayer = isMultiPlayer;
     }
 
     public void setHighScore(int highScore) {
@@ -88,30 +91,5 @@ public class GameOverPanel extends JPanel implements ActionListener, KeyListener
             this.removeAll();
             this.firePropertyChange(GameStateAction.GO_TO_MENU.toString(), false, true);
         }
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        System.out.println(e.getKeyCode());
-        if(e.getKeyCode() == KeyEvent.VK_SPACE) {
-            this.removeAll();
-            this.setVisible(false);
-            this.firePropertyChange(GameStateAction.PLAY.toString(), false, true);
-        }
-    }
-
-    public void setIsMultiPlayer(boolean isMultiPlayer) {
-        this.isMultiPlayer = isMultiPlayer;
-    }
-
-    //Unused
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
     }
 }
