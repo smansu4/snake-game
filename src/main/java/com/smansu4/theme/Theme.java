@@ -1,8 +1,6 @@
 package com.smansu4.theme;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Theme {
     public enum ThemeEnum {
