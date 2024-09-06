@@ -6,8 +6,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class GameOverPanel extends JPanel implements ActionListener {
+import static com.smansu4.enums.GameStateAction.PLAY;
+
+public class GameOverPanel extends JPanel implements ActionListener, KeyListener {
     private final String mainMenuBtnText = "Main Menu";
     private final JButton mainMenuButton = new JButton(mainMenuBtnText);
     private final JLabel gameOverLabel = new JLabel("Game Over");
@@ -23,8 +27,8 @@ public class GameOverPanel extends JPanel implements ActionListener {
 
     public GameOverPanel(int windowWidth, int windowHeight) {
         this.setSize(windowWidth, windowHeight);
-        setFocusable(true);
-        requestFocusInWindow();
+        this.addKeyListener(this);
+        this.setFocusable(true);
     }
 
     public void initialize() {
@@ -62,10 +66,17 @@ public class GameOverPanel extends JPanel implements ActionListener {
             this.add(player1Score, constraints);
         }
 
+        constraints.gridy = 4;
+        replayLabel.setFont(new Font(TEXT_FONT, Font.PLAIN, 12));
+        this.add(replayLabel, constraints);
+
         constraints.insets = inset_top_20;
         constraints.gridy = 5;
         mainMenuButton.addActionListener(this);
         this.add(mainMenuButton, constraints);
+
+        //Once initialized and made visible, the component can be focused on;
+        requestFocus();
     }
 
     public void setIsMultiPlayer(boolean isMultiPlayer) {
@@ -91,5 +102,21 @@ public class GameOverPanel extends JPanel implements ActionListener {
             this.removeAll();
             this.firePropertyChange(GameStateAction.GO_TO_MENU.toString(), false, true);
         }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+            this.firePropertyChange(String.valueOf(PLAY), false, true);
+        }
+    }
+
+    //Not used
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
     }
 }

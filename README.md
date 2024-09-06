@@ -7,7 +7,8 @@ based on a tutorial linked in the resources section below.
 
 Additional features (not in the tutorial) have been added:  
 
-- Support for color-blind friendly color palette (toggleable in game)
+- Restart feature allowing users to replay without exiting game window
+- Support for color-blind friendly color palette
 - Pause feature allowing players to stop game without losing progress 
 - Multiplayer option for competitive players
 - Main menu screen with game options
@@ -53,13 +54,13 @@ Development Notes:
 - Can also consider using redis to read/write high scores instead of using file. Currently, using file for simplicity.
 
 ### Images: 
-![Screenshot of game menu](src/main/resources/imgs/optionsMenu.png?raw=true "Option Menu seen upon app start up")
+![Screenshot of game menu](src/main/resources/imgs/options-menu-screen.png?raw=true "Option Menu seen upon app start up")
 ![Screenshot of single player game in dark mode](src/main/resources/imgs/single-player-dark-mode.png?raw=true "Single player dark mode")
 ![Screenshot of multi plauer game in light mode](src/main/resources/imgs/multi-player-light-mode.png?raw=true "Multi player dark mode")
+![Screenshot of game over screen](src/main/resources/imgs/game-over-screen.png?raw=true "Game over screen")
 
 
 ### TODOs:
-4. Reimplement the restart feature. feature was removed with the inclusion of JPanel menus. The KeyPress events were not being detected from the GameOver panel to restart the game. 
 5. Resolve the below issue. Memory leak issue with listeners in `SnakeGame.java`. The menu screen doesn't show the error when running for long periods of time. Thinking it's the game loop causing this?
 ````
 CodeCache: size=131072Kb used=4129Kb max_used=4131Kb free=126943Kb

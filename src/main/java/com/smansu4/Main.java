@@ -85,8 +85,8 @@ public class Main {
         //Add a listener for game panel state changes
         gamePanel.addPropertyChangeListener(evt -> {
             if(GameStateAction.GAME_OVER.toString().equals(evt.getPropertyName())){
-                gameOverPanel.initialize();
                 cardLayout.show(cards, Panels.GAME_OVER.toString());
+                gameOverPanel.initialize();
             } if(HIGH_SCORE.toString().equals(evt.getPropertyName())) {
                 gameOverPanel.setHighScore((Integer) evt.getNewValue());
             } if(P1_SCORE.toString().equals(evt.getPropertyName())) {

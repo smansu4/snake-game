@@ -34,7 +34,6 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
     private final boolean multiplayerEnabled;
     private boolean gameOver = false;
-    private boolean restart = false;
     private boolean pausedGame = false;
 
     public SnakeGame(int boardWidth, int boardHeight, boolean isMultiplayer) {
@@ -171,24 +170,6 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     private boolean isSnakeOutOfBounds(Snake player) {
         return player.head.x * Tile.SIZE < 0 || player.head.x * Tile.SIZE >= boardWidth ||
                 player.head.y * Tile.SIZE < 0 || player.head.y * Tile.SIZE >= boardHeight;
-    }
-
-    public void restartGameState() {
-        //stop snake and clear body
-        snake.resetSnake();
-        //move pieces
-        placeTile(snake.head);
-
-        if(multiplayerEnabled) {
-            snake2.resetSnake();
-            placeTile(snake2.head);
-        }
-
-        placeTile(food);
-
-        //reset state
-        restart = false;
-        gameOver = false;
     }
 
     private void displayScreen(Graphics g, String title, String subtitle) {
