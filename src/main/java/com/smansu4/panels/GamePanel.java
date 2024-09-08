@@ -1,11 +1,10 @@
 package com.smansu4.panels;
 
 import com.smansu4.snake.SnakeGame;
-import com.smansu4.enums.GameStateAction;
 
 import javax.swing.*;
 
-import static com.smansu4.panels.ScoreEnums.*;
+import static com.smansu4.constants.Constants.*;
 
 public class GamePanel extends JPanel {
     // Dimensions for game board; smaller than frame size to fit window
@@ -29,18 +28,18 @@ public class GamePanel extends JPanel {
 
         snakeGame.addPropertyChangeListener(evt -> {
             int defaultOldValue = -1;
-            if(GameStateAction.GAME_OVER.toString().equals(evt.getPropertyName())){
+            if(GAME_OVER.equals(evt.getPropertyName())){
                 snakeGame.removeAll();
                 snakeGame.setVisible(false);
                 remove(snakeGame);
                 setVisible(false);
-                firePropertyChange(GameStateAction.GAME_OVER.toString(), false, true);
-            } else if (HIGH_SCORE.toString().equals(evt.getPropertyName())){
-                firePropertyChange(HIGH_SCORE.toString(), defaultOldValue, evt.getNewValue());
-            } else if (P1_SCORE.toString().equals(evt.getPropertyName())){
-                firePropertyChange(P1_SCORE.toString(), defaultOldValue, evt.getNewValue());
-            } else if (P2_SCORE.toString().equals(evt.getPropertyName())){
-                firePropertyChange(P2_SCORE.toString(), defaultOldValue, evt.getNewValue());
+                firePropertyChange(GAME_OVER, false, true);
+            } else if (HIGH_SCORE.equals(evt.getPropertyName())){
+                firePropertyChange(HIGH_SCORE, defaultOldValue, evt.getNewValue());
+            } else if (P1_SCORE.equals(evt.getPropertyName())){
+                firePropertyChange(P1_SCORE, defaultOldValue, evt.getNewValue());
+            } else if (P2_SCORE.equals(evt.getPropertyName())){
+                firePropertyChange(P2_SCORE, defaultOldValue, evt.getNewValue());
             }
         });
         snakeGame.startGame();

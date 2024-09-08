@@ -1,7 +1,5 @@
 package com.smansu4;
 
-import com.smansu4.enums.GameStateAction;
-import com.smansu4.enums.Panels;
 import com.smansu4.panels.GameOverPanel;
 import com.smansu4.panels.GamePanel;
 import com.smansu4.panels.OptionsPanel;
@@ -10,7 +8,7 @@ import com.smansu4.theme.Theme;
 import javax.swing.*;
 import java.awt.*;
 
-import static com.smansu4.panels.ScoreEnums.*;
+import static com.smansu4.constants.Constants.*;
 
 public class Main {
     private JFrame frame;
@@ -50,9 +48,9 @@ public class Main {
         gameOverPanel = new GameOverPanel(windowWidth, windowHeight);
 
         //Add panels to the card panel
-        cards.add(optionsPanel, Panels.OPTION.toString());
-        cards.add(gamePanel, Panels.GAME.toString());
-        cards.add(gameOverPanel, Panels.GAME_OVER.toString());
+        cards.add(optionsPanel, OPTIONS_PANEL);
+        cards.add(gamePanel, GAME_PANEL);
+        cards.add(gameOverPanel, GAME_OVER_PANEL);
 
         frame.pack();
 
@@ -60,7 +58,7 @@ public class Main {
         optionsPanel.addPropertyChangeListener(evt -> {
             switch (evt.getPropertyName()) {
                 case "Play":
-                    cardLayout.show(cards, Panels.GAME.toString());
+                    cardLayout.show(cards, GAME_PANEL);
                     gamePanel.startGame();
                     break;
                 case "Multi Player":
@@ -84,14 +82,14 @@ public class Main {
 
         //Add a listener for game panel state changes
         gamePanel.addPropertyChangeListener(evt -> {
-            if(GameStateAction.GAME_OVER.toString().equals(evt.getPropertyName())){
-                cardLayout.show(cards, Panels.GAME_OVER.toString());
+            if(GAME_OVER.equals(evt.getPropertyName())){
+                cardLayout.show(cards, GAME_OVER_PANEL);
                 gameOverPanel.initialize();
-            } if(HIGH_SCORE.toString().equals(evt.getPropertyName())) {
+            } if(HIGH_SCORE.equals(evt.getPropertyName())) {
                 gameOverPanel.setHighScore((Integer) evt.getNewValue());
-            } if(P1_SCORE.toString().equals(evt.getPropertyName())) {
+            } if(P1_SCORE.equals(evt.getPropertyName())) {
                 gameOverPanel.setP1Score((Integer) evt.getNewValue());
-            } if(P2_SCORE.toString().equals(evt.getPropertyName())) {
+            } if(P2_SCORE.equals(evt.getPropertyName())) {
                 gameOverPanel.setP2Score((Integer) evt.getNewValue());
             }
         });
@@ -100,8 +98,8 @@ public class Main {
         //main menu not needed because the card shows the top
         // card in deck so action not needed to change cards here
         gameOverPanel.addPropertyChangeListener(evt -> {
-            if(GameStateAction.PLAY.toString().equals(evt.getPropertyName())) {
-                cardLayout.show(cards, Panels.GAME.toString());
+            if(REPLAY.equals(evt.getPropertyName())) {
+                cardLayout.show(cards, GAME_PANEL);
                 gamePanel.startGame();
             }
         });

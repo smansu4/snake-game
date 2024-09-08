@@ -1,7 +1,5 @@
 package com.smansu4.panels;
 
-import com.smansu4.enums.GameStateAction;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,7 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import static com.smansu4.enums.GameStateAction.PLAY;
+import static com.smansu4.constants.Constants.*;
 
 public class GameOverPanel extends JPanel implements ActionListener, KeyListener {
     private final String mainMenuBtnText = "Main Menu";
@@ -100,14 +98,14 @@ public class GameOverPanel extends JPanel implements ActionListener, KeyListener
         if (e.getActionCommand().equals(mainMenuBtnText)) {
             this.setVisible(false);
             this.removeAll();
-            this.firePropertyChange(GameStateAction.GO_TO_MENU.toString(), false, true);
+            this.firePropertyChange(GO_TO_MENU, false, true);
         }
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_SPACE) {
-            this.firePropertyChange(String.valueOf(PLAY), false, true);
+            this.firePropertyChange(REPLAY, false, true);
         }
     }
 

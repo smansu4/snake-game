@@ -1,6 +1,5 @@
 package com.smansu4.snake;
 
-import com.smansu4.enums.GameStateAction;
 import com.smansu4.theme.*;
 
 import javax.swing.*;
@@ -13,7 +12,7 @@ import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
 
-import static com.smansu4.panels.ScoreEnums.*;
+import static com.smansu4.constants.Constants.*;
 
 
 public class SnakeGame extends JPanel implements ActionListener, KeyListener {
@@ -201,12 +200,12 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
             gameLoop.stop();
             checkForHighScore();
-            this.firePropertyChange(HIGH_SCORE.toString(), defaultOldValue, highScore);
-            this.firePropertyChange(P1_SCORE.toString(), defaultOldValue, snake.body.size());
+            this.firePropertyChange(HIGH_SCORE, defaultOldValue, highScore);
+            this.firePropertyChange(P1_SCORE, defaultOldValue, snake.body.size());
             if(multiplayerEnabled) {
-                this.firePropertyChange(P2_SCORE.toString(), defaultOldValue, snake2.body.size());
+                this.firePropertyChange(P2_SCORE, defaultOldValue, snake2.body.size());
             }
-            this.firePropertyChange(GameStateAction.GAME_OVER.toString(), false, true);
+            this.firePropertyChange(GAME_OVER, false, true);
         }
     }
 
