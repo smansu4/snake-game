@@ -45,13 +45,13 @@ Game play notes:
 - Player score is displayed on the top left hand (and right if multiplayer) corner of window
 
 Development Notes: 
+- I have considered using redis to read/write high scores instead of using a file. Decided to continue using the .txt file to store the high score because this game is a small side project and I don't intend to scale or continue developing it. Any users of my version of snake would be non-technical friends/family so minimal set up is important. They should not need to install docker and/or work through any installation issues to play.
 - Replaced the painted options menu to a JPanel with UI components for cleaner look. The buttons allow the user to more easily select game settings vs having to read instructions in small text and toggle keys.
 - Decided not to toggle color of main menu as swing does not allow user to change button color easily. The background setting changes the screen color behind the button. Updating opacity replaced the button look and feel with a rectangular box. The original silver buttons did not look good against the dark theme black background.
 - The color-blind friendly theme was changed into a light mode. There wasn't a nice way to preview the color changes in the menu for the user without having to recreate the JPanel (to pick up new theme with each key press). Both options would have displayed a black game background with seemingly little difference in colors. Renaming the two themes as light and dark and set background accordingly was more intuitive for users.
   - The game text/snake/food in light mode uses color-blind friendly colors against the lighter background.
 - Made the design choice to make the `Theme` class a singleton. Originally the theme was changed via toggling the `T` key. I didn't want to instantiate new instances of the themes each key press while user was deciding on a selection. The singleton pattern was used to ensure only once instance of each color palette would exist.
   - There is now a menu for theme selection and user does not see the UI change in real time with the selection as with the previous drawn menu. For the future, the theme logic can be changed to only instantiate a palette when the user clicks play. The `Theme.java` file can then be completely removed after moving the inner classes to their own file.
-- Can also consider using redis to read/write high scores instead of using file. Currently, using file for simplicity.
 
 ### Images: 
 ![Screenshot of game menu](src/main/resources/imgs/options-menu-screen.png?raw=true "Option Menu seen upon app start up")
