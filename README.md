@@ -58,15 +58,3 @@ Development Notes:
 ![Screenshot of single player game in dark mode](src/main/resources/imgs/single-player-dark-mode.png?raw=true "Single player dark mode")
 ![Screenshot of multi plauer game in light mode](src/main/resources/imgs/multi-player-light-mode.png?raw=true "Multi player dark mode")
 ![Screenshot of game over screen](src/main/resources/imgs/game-over-screen.png?raw=true "Game over screen")
-
-
-### TODOs:
-5. Resolve the below issue. Memory leak issue with listeners in `SnakeGame.java`. The menu screen doesn't show the error when running for long periods of time. Thinking it's the game loop causing this?
-````
-CodeCache: size=131072Kb used=4129Kb max_used=4131Kb free=126943Kb
- bounds [0x0000000102bfc000, 0x000000010300c000, 0x000000010abfc000]
- total_blobs=1784 nmethods=1255 adapters=446
- compilation: disabled (not enough contiguous free space left)
-OpenJDK 64-Bit Server VM warning: CodeCache is full. Compiler has been disabled.
-OpenJDK 64-Bit Server VM warning: Try increasing the code cache size using -XX:ReservedCodeCacheSize=
-````
